@@ -542,7 +542,7 @@ class Cs24blog extends Module
                             $id_blog = $row['id_cs24_blog_blog'];
                         }
                     }
-                    $blog_obj = new Leoblogblog($id_blog);
+                    $blog_obj = new Cs24BlogBlog($id_blog);
                 }
                 
                 if ($page_name == 'category') {
@@ -1048,15 +1048,15 @@ class Cs24blog extends Module
     public function hookModuleRoutes($route = '', $detail = array())
     {
         $config = Cs24BlogConfig::getInstance();
-        Configuration::deleteByName('PS_ROUTE_module-leoblog-list');
-        Configuration::deleteByName('PS_ROUTE_module-leoblog-blog');
-        Configuration::deleteByName('PS_ROUTE_module-leoblog-category');
-        
+        Configuration::deleteByName('PS_ROUTE_module-cs24blog-list');
+        Configuration::deleteByName('PS_ROUTE_module-cs24blog-blog');
+        Configuration::deleteByName('PS_ROUTE_module-cs24blog-category');
+
         $routes = array();
 
-        $routes['module-leoblog-list'] = array(
+        $routes['module-cs24blog-list'] = array(
             'controller' => 'list',
-            'rule' => _LEO_BLOG_REWRITE_ROUTE_.'.html',
+            'rule' => _CS24_BLOG_REWRITE_ROUTE_.'.html',
             'keywords' => array(
             ),
             'params' => array(
@@ -1069,9 +1069,9 @@ class Cs24blog extends Module
         }
         if ($config->get('url_use_id', 1)) {
             // URL HAVE ID
-            $routes['module-leoblog-blog'] = array(
+            $routes['module-cs24blog-blog'] = array(
                 'controller' => 'blog',
-                'rule' => _LEO_BLOG_REWRITE_ROUTE_.'/{rewrite}-b{id}.html',
+                'rule' => _CS24_BLOG_REWRITE_ROUTE_.'/{rewrite}-b{id}.html',
                 'keywords' => array(
                     'id' => array('regexp' => '[0-9]+', 'param' => 'id'),
                     'rewrite' => array('regexp' => '[_a-zA-Z0-9-\pL]*', 'param' => 'rewrite'),
@@ -1079,13 +1079,13 @@ class Cs24blog extends Module
                 'params' => array(
                     'fc' => 'module',
                     'module' => 'cs24blog',
-                    
+
                 )
             );
 
-            $routes['module-leoblog-category'] = array(
+            $routes['module-cs24blog-category'] = array(
                 'controller' => 'category',
-                'rule' => _LEO_BLOG_REWRITE_ROUTE_.'/{rewrite}-c{id}.html',
+                'rule' => _CS24_BLOG_REWRITE_ROUTE_.'/{rewrite}-c{id}.html',
                 'keywords' => array(
                     'id' => array('regexp' => '[0-9]+', 'param' => 'id'),
                     'rewrite' => array('regexp' => '[_a-zA-Z0-9-\pL]*', 'param' => 'rewrite'),
@@ -1093,7 +1093,7 @@ class Cs24blog extends Module
                 'params' => array(
                     'fc' => 'module',
                     'module' => 'cs24blog',
-                            
+
                 )
             );
         } else {
@@ -1103,9 +1103,9 @@ class Cs24blog extends Module
             $detail_rewrite = 'detail_rewrite'.'_'.Context::getContext()->language->id;
             $detail_rewrite = $config->get($detail_rewrite, 'detail');
 
-            $routes['module-leoblog-blog'] = array(
+            $routes['module-cs24blog-blog'] = array(
                 'controller' => 'blog',
-                'rule' => _LEO_BLOG_REWRITE_ROUTE_.'/'.$detail_rewrite.'/{rewrite}.html',
+                'rule' => _CS24_BLOG_REWRITE_ROUTE_.'/'.$detail_rewrite.'/{rewrite}.html',
                 'keywords' => array(
                     'id' => array('regexp' => '[0-9]+', 'param' => 'id'),
                     'rewrite' => array('regexp' => '[_a-zA-Z0-9-\pL]*', 'param' => 'rewrite'),
@@ -1116,9 +1116,9 @@ class Cs24blog extends Module
                 )
             );
 
-            $routes['module-leoblog-category'] = array(
+            $routes['module-cs24blog-category'] = array(
                 'controller' => 'category',
-                'rule' => _LEO_BLOG_REWRITE_ROUTE_.'/'.$category_rewrite.'/{rewrite}.html',
+                'rule' => _CS24_BLOG_REWRITE_ROUTE_.'/'.$category_rewrite.'/{rewrite}.html',
                 'keywords' => array(
                     'id' => array('regexp' => '[0-9]+', 'param' => 'id'),
                     'rewrite' => array('regexp' => '[_a-zA-Z0-9-\pL]*', 'param' => 'rewrite'),

@@ -160,11 +160,11 @@ if (count($rows) <= 0) {
 
 
 $rows = Db::getInstance(_PS_USE_SQL_SLAVE_)->executeS('SELECT id_cs24_blog_blog FROM `'._DB_PREFIX_.'cs24_blog_blog`');
-if (count($rows) <= 0 && file_exists(_PS_MODULE_DIR_.'leoblog/install/sample.php')) {
+if (count($rows) <= 0 && file_exists(_PS_MODULE_DIR_.'cs24blog/install/sample.php')) {
     # validate module
-    include_once(_PS_MODULE_DIR_.'leoblog/install/sample.php');
+    include_once(_PS_MODULE_DIR_.'cs24blog/install/sample.php');
 } else {
     # validate module
-    include_once(_PS_MODULE_DIR_.'leoblog/install/config.php');
+    include_once(_PS_MODULE_DIR_.'cs24blog/install/config.php');
 }
 /* END REQUIRED */
