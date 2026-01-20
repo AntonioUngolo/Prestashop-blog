@@ -1,6 +1,6 @@
 <?php
 /**
- * 2007-2015 Leotheme
+ * 2024-2026 Compralosubito24
  *
  * NOTICE OF LICENSE
  *
@@ -8,14 +8,14 @@
  *
  * DISCLAIMER
  *
- *  @author    leotheme <leotheme@gmail.com>
- *  @copyright 2007-2015 Leotheme
- *  @license   http://leotheme.com - prestashop template provider
+ *  @author    Compralosubito24 <info@compralosubito24.it>
+ *  @copyright 2024-2026 Compralosubito24
+ *  @license   https://compralosubito24.it - prestashop template provider
  */
 
-if (!class_exists('LeoCaptcha')) {
+if (!class_exists('Cs24Captcha')) {
 
-    class LeoCaptcha
+    class Cs24Captcha
     {
         protected $code;
         protected $width = 35;

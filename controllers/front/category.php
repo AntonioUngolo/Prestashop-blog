@@ -1,6 +1,6 @@
 <?php
 /**
- * 2007-2015 Leotheme
+ * 2024-2026 Compralosubito24
  *
  * NOTICE OF LICENSE
  *
@@ -8,14 +8,14 @@
  *
  * DISCLAIMER
  *
- *  @author    leotheme <leotheme@gmail.com>
- *  @copyright 2007-2015 Leotheme
- *  @license   http://leotheme.com - prestashop template provider
+ *  @author    Compralosubito24 <info@compralosubito24.it>
+ *  @copyright 2024-2026 Compralosubito24
+ *  @license   https://compralosubito24.it - prestashop template provider
  */
 
 include_once(_PS_MODULE_DIR_.'leoblog/loader.php');
 
-class LeoblogcategoryModuleFrontController extends ModuleFrontController
+class Cs24BlogCategoryModuleFrontController extends ModuleFrontController
 {
     public $php_self;
     protected $template_path = '';
@@ -24,7 +24,7 @@ class LeoblogcategoryModuleFrontController extends ModuleFrontController
     {
         parent::__construct();
         $this->context = Context::getContext();
-        $this->template_path = _PS_MODULE_DIR_.'leoblog/views/templates/front/';
+        $this->template_path = _PS_MODULE_DIR_.'cs24blog/views/templates/front/';
     }
 
     /**
@@ -32,10 +32,10 @@ class LeoblogcategoryModuleFrontController extends ModuleFrontController
      */
     public function initContent()
     {
-        $config = LeoBlogConfig::getInstance();
+        $config = Cs24BlogConfig::getInstance();
 
         /* Load Css and JS File */
-        LeoBlogHelper::loadMedia($this->context, $this);
+        Cs24BlogHelper::loadMedia($this->context, $this);
 
         $this->php_self = 'category';
 
@@ -45,7 +45,7 @@ class LeoblogcategoryModuleFrontController extends ModuleFrontController
 
         $id_category = (int)Tools::getValue('id');
 
-        $helper = LeoBlogHelper::getInstance();
+        $helper = Cs24BlogHelper::getInstance();
 
         $limit_leading_blogs = (int)$config->get('listing_leading_limit_items', 1);
         $limit_secondary_blogs = (int)$config->get('listing_secondary_limit_items', 6);
@@ -55,7 +55,7 @@ class LeoblogcategoryModuleFrontController extends ModuleFrontController
         $p = abs((int)(Tools::getValue('p', 1)));
         if ($config->get('url_use_id', 1)) {
             // URL HAVE ID
-            $category = new Leoblogcat($id_category, $this->context->language->id);
+            $category = new Cs24BlogCat($id_category, $this->context->language->id);
         } else {
             // REMOVE ID FROM URL
             $url_rewrite = explode('/', $_SERVER['REQUEST_URI']) ;
@@ -68,37 +68,37 @@ class LeoblogcategoryModuleFrontController extends ModuleFrontController
             }
 
             $url_rewrite = rtrim($url_rewrite, '\.');    // result : product.html -> product.
-            $category = Leoblogcat::findByRewrite(array('link_rewrite'=>$url_rewrite));
+            $category = Cs24BlogCat::findByRewrite(array('link_rewrite'=>$url_rewrite));
         }
         
         $template = $config->get('template', 'default');
         // set link demo
         if (Tools::getValue('bloglayout') != null) {
-            if (is_dir(_PS_THEME_DIR_.'modules/leoblog/views/templates/front/'.Tools::getValue('bloglayout'))) {
+            if (is_dir(_PS_THEME_DIR_.'modules/cs24blog/views/templates/front/'.Tools::getValue('bloglayout'))) {
                 $template = Tools::getValue('bloglayout');
-            } elseif (is_dir(_PS_MODULE_DIR_ .'leoblog/views/templates/front/'.Tools::getValue('bloglayout'))) {
+            } elseif (is_dir(_PS_MODULE_DIR_ .'cs24blog/views/templates/front/'.Tools::getValue('bloglayout'))) {
                 $template = Tools::getValue('bloglayout');
             }
         }
         //set file include
-        if (is_dir(_PS_THEME_DIR_.'modules/leoblog/views/templates/front/'.$template) || is_dir(_PS_MODULE_DIR_.'leoblog/views/templates/front/'.$template)) {
-            if (file_exists(_PS_THEME_DIR_.'modules/leoblog/views/templates/front/'.$template.'/_listing_blog.tpl') || file_exists(_PS_MODULE_DIR_.'leoblog/views/templates/front/'.$template.'/_listing_blog.tpl')) {
-                $_listing_blog = 'module:leoblog/views/templates/front/'.$template.'/_listing_blog.tpl';
+        if (is_dir(_PS_THEME_DIR_.'modules/cs24blog/views/templates/front/'.$template) || is_dir(_PS_MODULE_DIR_.'cs24blog/views/templates/front/'.$template)) {
+            if (file_exists(_PS_THEME_DIR_.'modules/cs24blog/views/templates/front/'.$template.'/_listing_blog.tpl') || file_exists(_PS_MODULE_DIR_.'cs24blog/views/templates/front/'.$template.'/_listing_blog.tpl')) {
+                $_listing_blog = 'module:cs24blog/views/templates/front/'.$template.'/_listing_blog.tpl';
             } else {
-                $_listing_blog = 'module:leoblog/views/templates/front/default/_listing_blog.tpl';
+                $_listing_blog = 'module:cs24blog/views/templates/front/default/_listing_blog.tpl';
             }
-            if (file_exists(_PS_THEME_DIR_.'modules/leoblog/views/templates/front/'.$template.'/_pagination.tpl') || file_exists(_PS_MODULE_DIR_.'leoblog/views/templates/front/'.$template.'/_pagination.tpl')) {
-                $_pagination = 'module:leoblog/views/templates/front/'.$template.'/_pagination.tpl';
+            if (file_exists(_PS_THEME_DIR_.'modules/cs24blog/views/templates/front/'.$template.'/_pagination.tpl') || file_exists(_PS_MODULE_DIR_.'cs24blog/views/templates/front/'.$template.'/_pagination.tpl')) {
+                $_pagination = 'module:cs24blog/views/templates/front/'.$template.'/_pagination.tpl';
             } else {
-                $_pagination = 'module:leoblog/views/templates/front/default/_pagination.tpl';
+                $_pagination = 'module:cs24blog/views/templates/front/default/_pagination.tpl';
             }
 
-            if (!file_exists(_PS_THEME_DIR_.'modules/leoblog/views/templates/front/'.$template.'/category.tpl') && !file_exists(_PS_MODULE_DIR_.'leoblog/views/templates/front/'.$template.'/category.tpl')) {
+            if (!file_exists(_PS_THEME_DIR_.'modules/cs24blog/views/templates/front/'.$template.'/category.tpl') && !file_exists(_PS_MODULE_DIR_.'cs24blog/views/templates/front/'.$template.'/category.tpl')) {
                 $template = 'default';
             }
         }
 
-        if ($category->id_leoblogcat && $category->active) {
+        if ($category->id_cs24_blog_cat && $category->active) {
 //            $_GET['rewrite'] = $category->link_rewrite;
             $id_shop = $this->context->shop->id;
             $url = _PS_BASE_URL_;
@@ -108,11 +108,11 @@ class LeoblogcategoryModuleFrontController extends ModuleFrontController
             }
             if ($category->image) {
                 # validate module
-                $category->image = $url._THEME_DIR_.'assets/img/modules/leoblog/'.$id_shop.'/c/'.$category->image;
+                $category->image = $url._THEME_DIR_.'assets/img/modules/cs24blog/'.$id_shop.'/c/'.$category->image;
             }
 
-            $blogs = LeoBlogBlog::getListBlogs($category->id_leoblogcat, $this->context->language->id, $p, $limit, 'id_leoblog_blog', 'DESC', array(), true);
-            $count = LeoBlogBlog::countBlogs($category->id_leoblogcat, $this->context->language->id, true);
+            $blogs = Cs24BlogBlog::getListBlogs($category->id_cs24_blog_cat, $this->context->language->id, $p, $limit, 'id_cs24_blog_blog', 'DESC', array(), true);
+            $count = Cs24BlogBlog::countBlogs($category->id_cs24_blog_cat, $this->context->language->id, true);
             $authors = array();
 
             $leading_blogs = array();
@@ -127,7 +127,7 @@ class LeoblogcategoryModuleFrontController extends ModuleFrontController
             $image_h = (int)$config->get('listing_leading_img_height', 300);
 
             foreach ($leading_blogs as $key => $blog) {
-                $blog = LeoBlogHelper::buildBlog($helper, $blog, $image_w, $image_h, $config);
+                $blog = Cs24BlogHelper::buildBlog($helper, $blog, $image_w, $image_h, $config);
                 if ($blog['id_employee']) {
                     if (!isset($authors[$blog['id_employee']])) {
                         # validate module
@@ -153,7 +153,7 @@ class LeoblogcategoryModuleFrontController extends ModuleFrontController
             $image_h = (int)$config->get('listing_secondary_img_height', 200);
 
             foreach ($secondary_blogs as $key => $blog) {
-                $blog = LeoBlogHelper::buildBlog($helper, $blog, $image_w, $image_h, $config);
+                $blog = Cs24BlogHelper::buildBlog($helper, $blog, $image_w, $image_h, $config);
                 if ($blog['id_employee']) {
                     if (!isset($authors[$blog['id_employee']])) {
                         # validate module
@@ -192,7 +192,7 @@ class LeoblogcategoryModuleFrontController extends ModuleFrontController
 
             $params = array(
                 'rewrite' => $category->link_rewrite,
-                'id' => $category->id_leoblogcat
+                'id' => $category->id_cs24_blog_cat
             );
 
             /* breadcrumb */
@@ -201,7 +201,7 @@ class LeoblogcategoryModuleFrontController extends ModuleFrontController
             self::parentCategories($category, $all_cats);
 
             /* sub categories */
-            $categories = $category->getChild($category->id_leoblogcat, $this->context->language->id);
+            $categories = $category->getChild($category->id_cs24_blog_cat, $this->context->language->id);
 
             $childrens = array();
 
@@ -209,10 +209,10 @@ class LeoblogcategoryModuleFrontController extends ModuleFrontController
                 foreach ($categories as $child) {
                     $params = array(
                         'rewrite' => $child['link_rewrite'],
-                        'id' => $child['id_leoblogcat']
+                        'id' => $child['id_cs24_blog_cat']
                     );
 
-                    $child['thumb'] = $url._THEME_DIR_.'assets/img/modules/leoblog/'.$id_shop.'/c/'.$child['image'];
+                    $child['thumb'] = $url._THEME_DIR_.'assets/img/modules/cs24blog/'.$id_shop.'/c/'.$child['image'];
 
                     $child['category_link'] = $helper->getBlogCatLink($params);
                     if ($child['active']) {
@@ -264,13 +264,13 @@ class LeoblogcategoryModuleFrontController extends ModuleFrontController
             ));
         }
 
-        $this->setTemplate('module:leoblog/views/templates/front/'.$template.'/category.tpl');
+        $this->setTemplate('module:cs24blog/views/templates/front/'.$template.'/category.tpl');
     }
 
     public static function parentCategories($current, &$return)
     {
         if ($current->id_parent) {
-            $obj = new Leoblogcat($current->id_parent, Context::getContext()->language->id);
+            $obj = new Cs24BlogCat($current->id_parent, Context::getContext()->language->id);
             self::parentCategories($obj, $return);
         }
         $return[] = $current;
@@ -280,16 +280,16 @@ class LeoblogcategoryModuleFrontController extends ModuleFrontController
     public function getTemplateVarPage()
     {
         $page = parent::getTemplateVarPage();
-        $config = LeoBlogConfig::getInstance();
+        $config = Cs24BlogConfig::getInstance();
         if ($config->get('url_use_id', 1)) {
             // URL HAVE ID
-            $category = new Leoblogcat((int)Tools::getValue('id'), $this->context->language->id);
+            $category = new Cs24BlogCat((int)Tools::getValue('id'), $this->context->language->id);
         } else {
             // REMOVE ID FROM URL
             $url_rewrite = explode('/', $_SERVER['REQUEST_URI']) ;
             $url_last_item = count($url_rewrite) - 1;
             $url_rewrite = rtrim($url_rewrite[$url_last_item], '.html');
-            $category = Leoblogcat::findByRewrite(array('link_rewrite' => $url_rewrite));
+            $category = Cs24BlogCat::findByRewrite(array('link_rewrite' => $url_rewrite));
         }
         $page['meta']['title'] = Tools::ucfirst($category->title).' - '.Configuration::get('PS_SHOP_NAME');
         $page['meta']['keywords'] = $category->meta_keywords;
@@ -297,9 +297,9 @@ class LeoblogcategoryModuleFrontController extends ModuleFrontController
 
         $params = array(
             'rewrite' => $category->link_rewrite,
-            'id' => $category->id_leoblogcat
+            'id' => $category->id_cs24_blog_cat
         );
-        $page['canonical'] = LeoBlogHelper::getInstance()->getBlogCatLink($params);
+        $page['canonical'] = Cs24BlogHelper::getInstance()->getBlogCatLink($params);
         
         return $page;
     }
@@ -308,9 +308,9 @@ class LeoblogcategoryModuleFrontController extends ModuleFrontController
     public function getBreadcrumbLinks()
     {
         $breadcrumb = parent::getBreadcrumbLinks();
-        $helper = LeoBlogHelper::getInstance();
+        $helper = Cs24BlogHelper::getInstance();
         $link = $helper->getFontBlogLink();
-        $config = LeoBlogConfig::getInstance();
+        $config = Cs24BlogConfig::getInstance();
         $breadcrumb['links'][] = array(
             'title' => $config->get('blog_link_title_'.$this->context->language->id, $this->l('Blog', 'category')),
             'url' => $link,
@@ -318,18 +318,18 @@ class LeoblogcategoryModuleFrontController extends ModuleFrontController
         
         if ($config->get('url_use_id', 1)) {
             // URL HAVE ID
-            $category = new Leoblogcat((int)Tools::getValue('id'), $this->context->language->id);
+            $category = new Cs24BlogCat((int)Tools::getValue('id'), $this->context->language->id);
         } else {
             // REMOVE ID FROM URL
             $url_rewrite = explode('/', $_SERVER['REQUEST_URI']) ;
             $url_last_item = count($url_rewrite) - 1;
             $url_rewrite = rtrim($url_rewrite[$url_last_item], '.html');
-            $category = Leoblogcat::findByRewrite(array('link_rewrite'=>$url_rewrite));
+            $category = Cs24BlogCat::findByRewrite(array('link_rewrite'=>$url_rewrite));
         }
                 
         $params = array(
             'rewrite' => $category->link_rewrite,
-            'id' => $category->id_leoblogcat
+            'id' => $category->id_cs24_blog_cat
         );
 
         $category_link = $helper->getBlogCatLink($params);

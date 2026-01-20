@@ -1,16 +1,16 @@
 <?php
 /**
- * 2007-2015 Leotheme
+ * 2024-2026 Compralosubito24
  *
  * NOTICE OF LICENSE
  *
- *  Content Management
+ *  Blog Content Management Module
  *
  * DISCLAIMER
  *
- *  @author    leotheme <leotheme@gmail.com>
- *  @copyright 2007-2015 Leotheme
- *  @license   http://leotheme.com - prestashop template provider
+ *  @author    Compralosubito24 <info@compralosubito24.it>
+ *  @copyright 2024-2026 Compralosubito24
+ *  @license   https://compralosubito24.it
  */
 
 if (!defined('_PS_VERSION_')) {
@@ -18,9 +18,9 @@ if (!defined('_PS_VERSION_')) {
     exit;
 }
 
-include_once(_PS_MODULE_DIR_.'leoblog/loader.php');
+include_once(_PS_MODULE_DIR_.'cs24blog/loader.php');
 
-class Leoblog extends Module
+class Cs24blog extends Module
 {
     private static $leo_xml_fields = array('title', 'guid', 'description', 'author', 'comments', 'pubDate', 'source', 'link', 'content');
     public $base_config_url;
@@ -31,10 +31,10 @@ class Leoblog extends Module
     {
         $currentIndex = '';
 
-        $this->name = 'leoblog';
+        $this->name = 'cs24blog';
         $this->tab = 'front_office_features';
-        $this->version = '3.1.0';
-        $this->author = 'LeoTheme';
+        $this->version = '1.0.0';
+        $this->author = 'Compralosubito24';
         $this->controllers = array('blog', 'category', 'list');
         $this->need_instance = 0;
         $this->bootstrap = true;
@@ -44,7 +44,7 @@ class Leoblog extends Module
         parent::__construct();
 
         $this->base_config_url = $currentIndex.'&configure='.$this->name.'&token='.Tools::getValue('token');
-        $this->displayName = $this->l('Leo Blog Management');
+        $this->displayName = $this->l('Compralosubito24 Blog');
         $this->description = $this->l('Manage Blog Content');
     }
 
@@ -103,19 +103,19 @@ class Leoblog extends Module
             /* Creates tables */
 //            $res &= $this->createTables();
             
-            Configuration::updateValue('LEOBLOG_CATEORY_MENU', 1);
-            Configuration::updateValue('LEOBLOG_COLUMN_POSITION', 'left');
-            Configuration::updateValue('LEOBLOG_SHARE_FB', 1);
-            Configuration::updateValue('LEOBLOG_SHARE_TW', 1);
-            Configuration::updateValue('LEOBLOG_SOCIAL_LIKE', 1);
+            Configuration::updateValue('CS24BLOG_CATEORY_MENU', 1);
+            Configuration::updateValue('CS24BLOG_COLUMN_POSITION', 'left');
+            Configuration::updateValue('CS24BLOG_SHARE_FB', 1);
+            Configuration::updateValue('CS24BLOG_SHARE_TW', 1);
+            Configuration::updateValue('CS24BLOG_SOCIAL_LIKE', 1);
 
-            Configuration::updateValue('LEOBLOG_IMAGE_TYPE', 'jpg');
-            Configuration::updateValue('LEOBLOG_DASHBOARD_DEFAULTTAB', '#fieldset_0');
+            Configuration::updateValue('CS24BLOG_IMAGE_TYPE', 'jpg');
+            Configuration::updateValue('CS24BLOG_DASHBOARD_DEFAULTTAB', '#fieldset_0');
             Configuration::updateValue('AP_INSTALLED_LEOBLOG', '1');
             
             //DONGND: check thumb column, if not exist auto add
-            if (Db::getInstance()->executeS('SHOW TABLES LIKE \'%leoblog_blog%\'') && count(Db::getInstance()->executes('SELECT "thumb" FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = "'._DB_NAME_.'" AND TABLE_NAME = "'._DB_PREFIX_.'leoblog_blog" AND COLUMN_NAME = "thumb"'))<1) {
-                Db::getInstance()->execute('ALTER TABLE `'._DB_PREFIX_.'leoblog_blog` ADD `thumb` varchar(255) DEFAULT NULL');
+            if (Db::getInstance()->executeS('SHOW TABLES LIKE \'%cs24_blog_blog%\'') && count(Db::getInstance()->executes('SELECT "thumb" FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = "'._DB_NAME_.'" AND TABLE_NAME = "'._DB_PREFIX_.'cs24_blog_blog" AND COLUMN_NAME = "thumb"'))<1) {
+                Db::getInstance()->execute('ALTER TABLE `'._DB_PREFIX_.'cs24_blog_blog` ADD `thumb` varchar(255) DEFAULT NULL');
             }
             
             // $this->registerHook('header'); # remove code in 2016
@@ -129,7 +129,7 @@ class Leoblog extends Module
             $langs = Language::getLanguages(false);
             foreach ($langs as $l) {
                 # validate module
-                $tab1->name[$l['id_lang']] = $this->l('Leo Blog Management');
+                $tab1->name[$l['id_lang']] = $this->l('Compralosubito24 Blog Management');
             }
 //            $id_tab1 = $tab1->add(true, false);
             $tab1->add(true, false);
@@ -137,11 +137,11 @@ class Leoblog extends Module
             # insert icon for tab
             Db::getInstance()->execute(' UPDATE `'._DB_PREFIX_.'tab` SET `icon` = "create" WHERE `id_tab` = "'.(int)$tab1->id.'"');
             
-            $this->installModuleTab('Blog Dashboard', 'dashboard', 'AdminLeoblogManagement');
-            $this->installModuleTab('Categories Management', 'categories', 'AdminLeoblogManagement');
-            $this->installModuleTab('Blogs Management', 'blogs', 'AdminLeoblogManagement');
-            $this->installModuleTab('Comment Management', 'comments', 'AdminLeoblogManagement');
-            $this->installModuleTab('Leo Blog Configuration', 'module', 'AdminLeoblogManagement');
+            $this->installModuleTab('Blog Dashboard', 'dashboard', 'AdminCs24blogManagement');
+            $this->installModuleTab('Categories Management', 'categories', 'AdminCs24blogManagement');
+            $this->installModuleTab('Blogs Management', 'blogs', 'AdminCs24blogManagement');
+            $this->installModuleTab('Comment Management', 'comments', 'AdminCs24blogManagement');
+            $this->installModuleTab('Compralosubito24 Blog Configuration', 'module', 'AdminCs24blogManagement');
             
             //DONGND:: move image folder from module to theme
             $this->moveImageFolder();
@@ -153,7 +153,7 @@ class Leoblog extends Module
 
     public function lazydatabase()
     {
-        $sql = ' SELECT * FROM '._DB_PREFIX_.'leoblog_blog_lang';
+        $sql = ' SELECT * FROM '._DB_PREFIX_.'cs24_blog_blog_lang';
         $result = Db::getInstance()->executes($sql);
         foreach ($result as $value) {
             $content = '';
@@ -165,7 +165,7 @@ class Leoblog extends Module
                 $description = $this->addLazy($value['description']);
             }
             if ($content != '' || $description != '') {
-                $sql = 'UPDATE `'._DB_PREFIX_.'leoblog_blog_lang` set content = \''.$content.'\' , description = \''.$description.'\' WHERE id_leoblog_blog = \''.(int)$value['id_leoblog_blog'].'\' and id_lang=\''.(int)$value['id_lang'].'\'';
+                $sql = 'UPDATE `'._DB_PREFIX_.'cs24_blog_blog_lang` set content = \''.$content.'\' , description = \''.$description.'\' WHERE id_cs24_blog_blog = \''.(int)$value['id_cs24_blog_blog'].'\' and id_lang=\''.(int)$value['id_lang'].'\'';
                 Db::getInstance()->execute($sql);
             }
         }
@@ -204,7 +204,7 @@ class Leoblog extends Module
 
     public function lazyrolbackdatabase()
     {
-        $sql = ' SELECT * FROM '._DB_PREFIX_.'leoblog_blog_lang';
+        $sql = ' SELECT * FROM '._DB_PREFIX_.'cs24_blog_blog_lang';
         $result = Db::getInstance()->executes($sql);
         foreach ($result as $value) {
             $content = '';
@@ -216,7 +216,7 @@ class Leoblog extends Module
                 $description = $this->removeLazy($value['description']);
             }
             if ($content != '' || $description != '') {
-                $sql = 'UPDATE `'._DB_PREFIX_.'leoblog_blog_lang` set content = \''.$content.'\' , description = \''.$description.'\' WHERE id_leoblog_blog = \''.(int)$value['id_leoblog_blog'].'\' and id_lang=\''.(int)$value['id_lang'].'\'';
+                $sql = 'UPDATE `'._DB_PREFIX_.'cs24_blog_blog_lang` set content = \''.$content.'\' , description = \''.$description.'\' WHERE id_cs24_blog_blog = \''.(int)$value['id_cs24_blog_blog'].'\' and id_lang=\''.(int)$value['id_lang'].'\'';
                 
                 Db::getInstance()->execute($sql);
             }
@@ -268,13 +268,13 @@ class Leoblog extends Module
         
         if (Tools::isSubmit('submitBlockCategories')) {
             # VALIDATE MODULE
-            Configuration::updateValue('LEOBLOG_CATEORY_MENU', (int)Tools::getValue('LEOBLOG_CATEORY_MENU'));
-            Configuration::updateValue('LEOBLOG_COLUMN_POSITION', Tools::getValue('LEOBLOG_COLUMN_POSITION'));
-            Configuration::updateValue('LEOBLOG_SHARE_FB', Tools::getValue('LEOBLOG_SHARE_FB'));
-            Configuration::updateValue('LEOBLOG_SHARE_TW', Tools::getValue('LEOBLOG_SHARE_TW'));
-            Configuration::updateValue('LEOBLOG_SOCIAL_LIKE', Tools::getValue('LEOBLOG_SOCIAL_LIKE'));
+            Configuration::updateValue('CS24BLOG_CATEORY_MENU', (int)Tools::getValue('CS24BLOG_CATEORY_MENU'));
+            Configuration::updateValue('CS24BLOG_COLUMN_POSITION', Tools::getValue('CS24BLOG_COLUMN_POSITION'));
+            Configuration::updateValue('CS24BLOG_SHARE_FB', Tools::getValue('CS24BLOG_SHARE_FB'));
+            Configuration::updateValue('CS24BLOG_SHARE_TW', Tools::getValue('CS24BLOG_SHARE_TW'));
+            Configuration::updateValue('CS24BLOG_SOCIAL_LIKE', Tools::getValue('CS24BLOG_SOCIAL_LIKE'));
 
-            Configuration::updateValue('LEOBLOG_IMAGE_TYPE', Tools::getValue('LEOBLOG_IMAGE_TYPE'));
+            Configuration::updateValue('CS24BLOG_IMAGE_TYPE', Tools::getValue('CS24BLOG_IMAGE_TYPE'));
         }
         
         if (Tools::getValue('correctmodule')) {
@@ -310,7 +310,7 @@ class Leoblog extends Module
 
     public function getTreeForApPageBuilder($selected)
     {
-        $cat = new Leoblogcat();
+        $cat = new Cs24BlogCat();
         return $cat->getTreeForApPageBuilder($selected);
     }
 
@@ -326,7 +326,7 @@ class Leoblog extends Module
                     array(
                         'type' => 'switch',
                         'label' => $this->l('Enable Categories Tree Block'),
-                        'name' => 'LEOBLOG_CATEORY_MENU',
+                        'name' => 'CS24BLOG_CATEORY_MENU',
                         'desc' => $this->l('Activate  The Module.'),
                         'values' => array(
                             array(
@@ -344,7 +344,7 @@ class Leoblog extends Module
                     array(
                         'type' => 'select',
                         'label' => $this->l('Image type'),
-                        'name' => 'LEOBLOG_IMAGE_TYPE',
+                        'name' => 'CS24BLOG_IMAGE_TYPE',
                         'options' => array(
                             'query' => array(
                                 array(
@@ -364,7 +364,7 @@ class Leoblog extends Module
                     array(
                         'type' => 'select',
                         'label' => $this->l('Show column'),
-                        'name' => 'LEOBLOG_COLUMN_POSITION',
+                        'name' => 'CS24BLOG_COLUMN_POSITION',
                         'desc' => $this->l('Choose a position for block search'),
                         'options' => array(
                             'query' => array(
@@ -384,7 +384,7 @@ class Leoblog extends Module
                     array(
                         'type' => 'switch',
                         'label' => $this->l('Button share facebook'),
-                        'name' => 'LEOBLOG_SHARE_FB',
+                        'name' => 'CS24BLOG_SHARE_FB',
                         'desc' => $this->l('Show button share facebook on the blogs.'),
                         'values' => array(
                             array(
@@ -402,7 +402,7 @@ class Leoblog extends Module
                     array(
                         'type' => 'switch',
                         'label' => $this->l('Button share twitter'),
-                        'name' => 'LEOBLOG_SHARE_TW',
+                        'name' => 'CS24BLOG_SHARE_TW',
                         'desc' => $this->l('Show button share twitter on the blogs.'),
                         'values' => array(
                             array(
@@ -420,7 +420,7 @@ class Leoblog extends Module
                     array(
                         'type' => 'switch',
                         'label' => $this->l('Button like social'),
-                        'name' => 'LEOBLOG_SOCIAL_LIKE',
+                        'name' => 'CS24BLOG_SOCIAL_LIKE',
                         'desc' => $this->l('Show button like social on the blogs.'),
                         'values' => array(
                             array(
@@ -464,25 +464,25 @@ class Leoblog extends Module
     public function getConfigFieldsValues()
     {
         return array(
-            'LEOBLOG_CATEORY_MENU' => Tools::getValue('LEOBLOG_CATEORY_MENU', Configuration::get('LEOBLOG_CATEORY_MENU')),
-            'LEOBLOG_COLUMN_POSITION' => Tools::getValue('LEOBLOG_COLUMN_POSITION', Configuration::get('LEOBLOG_COLUMN_POSITION')),
-            'LEOBLOG_SHARE_FB' => Tools::getValue('LEOBLOG_SHARE_FB', Configuration::get('LEOBLOG_SHARE_FB')),
-            'LEOBLOG_SHARE_TW' => Tools::getValue('LEOBLOG_SHARE_TW', Configuration::get('LEOBLOG_SHARE_TW')),
-            'LEOBLOG_SOCIAL_LIKE' => Tools::getValue('LEOBLOG_SOCIAL_LIKE', Configuration::get('LEOBLOG_SOCIAL_LIKE')),
-            'LEOBLOG_IMAGE_TYPE' => Tools::getValue('LEOBLOG_IMAGE_TYPE', Configuration::get('LEOBLOG_IMAGE_TYPE')),
+            'CS24BLOG_CATEORY_MENU' => Tools::getValue('CS24BLOG_CATEORY_MENU', Configuration::get('CS24BLOG_CATEORY_MENU')),
+            'CS24BLOG_COLUMN_POSITION' => Tools::getValue('CS24BLOG_COLUMN_POSITION', Configuration::get('CS24BLOG_COLUMN_POSITION')),
+            'CS24BLOG_SHARE_FB' => Tools::getValue('CS24BLOG_SHARE_FB', Configuration::get('CS24BLOG_SHARE_FB')),
+            'CS24BLOG_SHARE_TW' => Tools::getValue('CS24BLOG_SHARE_TW', Configuration::get('CS24BLOG_SHARE_TW')),
+            'CS24BLOG_SOCIAL_LIKE' => Tools::getValue('CS24BLOG_SOCIAL_LIKE', Configuration::get('CS24BLOG_SOCIAL_LIKE')),
+            'CS24BLOG_IMAGE_TYPE' => Tools::getValue('CS24BLOG_IMAGE_TYPE', Configuration::get('CS24BLOG_IMAGE_TYPE')),
             
         );
     }
 
     public function _prepareHook()
     {
-        $helper = LeoBlogHelper::getInstance();
+        $helper = Cs24BlogHelper::getInstance();
 
-        $category = new Leoblogcat(Tools::getValue('id_leoblogcat'), $this->context->language->id);
+        $category = new Cs24BlogCat(Tools::getValue('id_cs24_blog_cat'), $this->context->language->id);
 
-        $tree = $category->getFrontEndTree((int)$category->id_leoblogcat > 1 ? $category->id_leoblogcat : 1, $helper);
+        $tree = $category->getFrontEndTree((int)$category->id_cs24_blog_cat > 1 ? $category->id_cs24_blog_cat : 1, $helper);
         $this->smarty->assign('tree', $tree);
-        if ($category->id_leoblogcat) {
+        if ($category->id_cs24_blog_cat) {
             # validate module
             $this->smarty->assign('currentCategory', $category);
         }
@@ -492,7 +492,7 @@ class Leoblog extends Module
 
     public function hookDisplayHeader()
     {
-        $config = LeoBlogConfig::getInstance();
+        $config = Cs24BlogConfig::getInstance();
         $template = $config->get('template');
         $media_dir = $this->getMediaDir();
         if (Tools::getValue('bloglayout') != null) {
@@ -516,10 +516,10 @@ class Leoblog extends Module
         }
                     
         //DONGND:: update language link
-        if (Tools::getValue('module') == 'leoblog') {
+        if (Tools::getValue('module') == 'cs24blog') {
             $langs = Language::getLanguages(false);
             if (count($langs) > 1) {
-                $config = LeoBlogConfig::getInstance();
+                $config = Cs24BlogConfig::getInstance();
                 $array_list_rewrite = array();
                 $array_category_rewrite = array();
                 $array_config_category_rewrite = array();
@@ -535,11 +535,11 @@ class Leoblog extends Module
                     } else {
                         $id_shop = (int)Context::getContext()->shop->id;
                         $block_rewrite = Tools::getValue('rewrite');
-                        $sql = 'SELECT bl.id_leoblog_blog FROM '._DB_PREFIX_.'leoblog_blog_lang bl';
-                        $sql .= ' INNER JOIN '._DB_PREFIX_.'leoblog_blog_shop bs on bl.id_leoblog_blog=bs.id_leoblog_blog AND id_shop='.(int)$id_shop;
+                        $sql = 'SELECT bl.id_cs24_blog_blog FROM '._DB_PREFIX_.'cs24_blog_blog_lang bl';
+                        $sql .= ' INNER JOIN '._DB_PREFIX_.'cs24_blog_blog_shop bs on bl.id_cs24_blog_blog=bs.id_cs24_blog_blog AND id_shop='.(int)$id_shop;
                         $sql .= " AND link_rewrite = '".pSQL($block_rewrite)."'";
                         if ($row = Db::getInstance()->getRow($sql)) {
-                            $id_blog = $row['id_leoblog_blog'];
+                            $id_blog = $row['id_cs24_blog_blog'];
                         }
                     }
                     $blog_obj = new Leoblogblog($id_blog);
@@ -551,16 +551,16 @@ class Leoblog extends Module
                     } else {
                         $id_shop = (int)Context::getContext()->shop->id;
                         $category_rewrite = Tools::getValue('rewrite');
-                        $sql = 'SELECT cl.id_leoblogcat FROM '._DB_PREFIX_.'leoblogcat_lang cl';
-                        $sql .= ' INNER JOIN '._DB_PREFIX_.'leoblogcat_shop cs on cl.id_leoblogcat=cs.id_leoblogcat AND id_shop='.(int)$id_shop;
-                        $sql .= ' INNER JOIN '._DB_PREFIX_.'leoblogcat cc on cl.id_leoblogcat=cc.id_leoblogcat AND cl.id_leoblogcat != cc.id_parent';  # FIX : PARENT IS NOT THIS CATEGORY
+                        $sql = 'SELECT cl.id_cs24_blog_cat FROM '._DB_PREFIX_.'cs24_blog_cat_lang cl';
+                        $sql .= ' INNER JOIN '._DB_PREFIX_.'cs24_blog_cat_shop cs on cl.id_cs24_blog_cat=cs.id_cs24_blog_cat AND id_shop='.(int)$id_shop;
+                        $sql .= ' INNER JOIN '._DB_PREFIX_.'cs24_blog_cat cc on cl.id_cs24_blog_cat=cc.id_cs24_blog_cat AND cl.id_cs24_blog_cat != cc.id_parent';  # FIX : PARENT IS NOT THIS CATEGORY
                         $sql .= " AND link_rewrite = '".pSQL($category_rewrite)."'";
 
                         if ($row = Db::getInstance()->getRow($sql)) {
-                            $id_category = $row['id_leoblogcat'];
+                            $id_category = $row['id_cs24_blog_cat'];
                         }
                     }
-                    $blog_category_obj = new Leoblogcat($id_category);
+                    $blog_category_obj = new Cs24BlogCat($id_category);
                 }
                 
                 foreach ($langs as $lang) {
@@ -599,8 +599,8 @@ class Leoblog extends Module
         $fc = Tools::getValue('fc');
         $module = Tools::getValue('module');
 
-        if ($fc == 'module' && $module =='leoblog') {
-            if (Configuration::get('LEOBLOG_COLUMN_POSITION') == 'left') {
+        if ($fc == 'module' && $module =='cs24blog') {
+            if (Configuration::get('CS24BLOG_COLUMN_POSITION') == 'left') {
                 $html .= $this->searchBlog();
             }
             $html .= $this->leftCategoryBlog();
@@ -618,8 +618,8 @@ class Leoblog extends Module
         $fc = Tools::getValue('fc');
         $module = Tools::getValue('module');
         
-        if ($fc == 'module' && $module =='leoblog') {
-            if (Configuration::get('LEOBLOG_COLUMN_POSITION') == 'left') {
+        if ($fc == 'module' && $module =='cs24blog') {
+            if (Configuration::get('CS24BLOG_COLUMN_POSITION') == 'left') {
                 $html .= $this->searchBlog();
             }
             $html .= $this->leftCategoryBlog();
@@ -635,7 +635,7 @@ class Leoblog extends Module
     {
         $html = '';
         
-        if (Configuration::get('LEOBLOG_COLUMN_POSITION') && $this->_prepareHook()) {
+        if (Configuration::get('CS24BLOG_COLUMN_POSITION') && $this->_prepareHook()) {
             $html .= $this->display(__FILE__, 'views/templates/hook/search_blog.tpl');
         }
         
@@ -646,7 +646,7 @@ class Leoblog extends Module
     {
         $html = '';
         
-        if (Configuration::get('LEOBLOG_CATEORY_MENU') && $this->_prepareHook()) {
+        if (Configuration::get('CS24BLOG_CATEORY_MENU') && $this->_prepareHook()) {
             $html .= $this->display(__FILE__, 'views/templates/hook/categories_menu.tpl');
         }
         
@@ -657,20 +657,20 @@ class Leoblog extends Module
     {
         $html = '';
         
-        $config = LeoBlogConfig::getInstance();
+        $config = Cs24BlogConfig::getInstance();
         if ($config->get('show_popular_blog', 0)) {
             $limit = (int)$config->get('limit_popular_blog', 5);
-            $helper = LeoBlogHelper::getInstance();
+            $helper = Cs24BlogHelper::getInstance();
             $image_w = (int)$config->get('listing_leading_img_width', 690);
             $image_h = (int)$config->get('listing_leading_img_height', 300);
             $authors = array();
 
             $leading_blogs = array();
             if ($limit > 0) {
-                $leading_blogs = LeoBlogBlog::getListBlogs(null, $this->context->language->id, 1, $limit, 'hits', 'DESC', array(), true);
+                $leading_blogs = Cs24BlogBlog::getListBlogs(null, $this->context->language->id, 1, $limit, 'hits', 'DESC', array(), true);
             }
             foreach ($leading_blogs as $key => $blog) {
-                $blog = LeoBlogHelper::buildBlog($helper, $blog, $image_w, $image_h, $config);
+                $blog = Cs24BlogHelper::buildBlog($helper, $blog, $image_w, $image_h, $config);
                 if ($blog['id_employee']) {
                     if (!isset($authors[$blog['id_employee']])) {
                         # validate module
@@ -703,21 +703,21 @@ class Leoblog extends Module
     {
         $html = '';
         
-        $config = LeoBlogConfig::getInstance();
+        $config = Cs24BlogConfig::getInstance();
         if ($config->get('show_recent_blog', 0)) {
             $limit = (int)$config->get('limit_recent_blog', 5);
-            $config = LeoBlogConfig::getInstance();
-            $helper = LeoBlogHelper::getInstance();
+            $config = Cs24BlogConfig::getInstance();
+            $helper = Cs24BlogHelper::getInstance();
             $image_w = (int)$config->get('listing_leading_img_width', 690);
             $image_h = (int)$config->get('listing_leading_img_height', 300);
             $authors = array();
 
             $leading_blogs = array();
             if ($limit > 0) {
-                $leading_blogs = LeoBlogBlog::getListBlogs(null, $this->context->language->id, 1, $limit, 'date_add', 'DESC', array(), true);
+                $leading_blogs = Cs24BlogBlog::getListBlogs(null, $this->context->language->id, 1, $limit, 'date_add', 'DESC', array(), true);
             }
             foreach ($leading_blogs as $key => $blog) {
-                $blog = LeoBlogHelper::buildBlog($helper, $blog, $image_w, $image_h, $config);
+                $blog = Cs24BlogHelper::buildBlog($helper, $blog, $image_w, $image_h, $config);
                 if ($blog['id_employee']) {
                     if (!isset($authors[$blog['id_employee']])) {
                         # validate module
@@ -749,11 +749,11 @@ class Leoblog extends Module
     public function lefTagBlog()
     {
         $html = '';
-        $helper = LeoBlogHelper::getInstance();
+        $helper = Cs24BlogHelper::getInstance();
         
-        $config = LeoBlogConfig::getInstance();
+        $config = Cs24BlogConfig::getInstance();
         if ($config->get('show_all_tags', 0)) {
-            $leading_blogs = LeoBlogBlog::getListBlogs(null, $this->context->language->id, 1, 100000, 'date_add', 'DESC', array(), true);
+            $leading_blogs = Cs24BlogBlog::getListBlogs(null, $this->context->language->id, 1, 100000, 'date_add', 'DESC', array(), true);
 
             $tags_temp = array();
             foreach ($leading_blogs as $key => $value) {
@@ -783,7 +783,7 @@ class Leoblog extends Module
       {
       if (!$this->isCached('leoblogrss.tpl', $cacheId)) {
       // Getting data
-      $config = LeoBlogConfig::getInstance();
+      $config = Cs24BlogConfig::getInstance();
       $title = strval($config->get('rss_title_item', 'RSS FEED'));
       $url = Tools::htmlentitiesutf8('http://'.$_SERVER['HTTP_HOST'].__PS_BASE_URI__).'modules/leoblog/rss.php';
       $nb = (int)$config->get('rss_limit_item', 1);
@@ -828,8 +828,8 @@ class Leoblog extends Module
         $fc = Tools::getValue('fc');
         $module = Tools::getValue('module');
         
-        if ($fc == 'module' && $module =='leoblog') {
-            if (Configuration::get('LEOBLOG_COLUMN_POSITION') == 'right') {
+        if ($fc == 'module' && $module =='cs24blog') {
+            if (Configuration::get('CS24BLOG_COLUMN_POSITION') == 'right') {
                 $html .= $this->searchBlog();
             }
             $html .= $this->leftCategoryBlog();
@@ -868,26 +868,26 @@ class Leoblog extends Module
     {
         return Db::getInstance()->execute('
             DROP TABLE IF EXISTS
-            `'._DB_PREFIX_.'leoblogcat`,
-            `'._DB_PREFIX_.'leoblogcat_lang`,
-            `'._DB_PREFIX_.'leoblogcat_shop`,
-            `'._DB_PREFIX_.'leoblog_comment`,
-            `'._DB_PREFIX_.'leoblog_blog`,
-            `'._DB_PREFIX_.'leoblog_blog_lang`,
-            `'._DB_PREFIX_.'leoblog_blog_shop`');
+            `'._DB_PREFIX_.'cs24_blog_cat`,
+            `'._DB_PREFIX_.'cs24_blog_cat_lang`,
+            `'._DB_PREFIX_.'cs24_blog_cat_shop`,
+            `'._DB_PREFIX_.'cs24_blog_comment`,
+            `'._DB_PREFIX_.'cs24_blog_blog`,
+            `'._DB_PREFIX_.'cs24_blog_blog_lang`,
+            `'._DB_PREFIX_.'cs24_blog_blog_shop`');
     }
 
     public function deleteConfiguration()
     {
-        Configuration::deleteByName('LEOBLOG_CATEORY_MENU');
-        Configuration::deleteByName('LEOBLOG_COLUMN_POSITION');
-        Configuration::deleteByName('LEOBLOG_SHARE_FB');
-        Configuration::deleteByName('LEOBLOG_SHARE_TW');
-        Configuration::deleteByName('LEOBLOG_SOCIAL_LIKE');
-        Configuration::deleteByName('LEOBLOG_IMAGE_TYPE');
+        Configuration::deleteByName('CS24BLOG_CATEORY_MENU');
+        Configuration::deleteByName('CS24BLOG_COLUMN_POSITION');
+        Configuration::deleteByName('CS24BLOG_SHARE_FB');
+        Configuration::deleteByName('CS24BLOG_SHARE_TW');
+        Configuration::deleteByName('CS24BLOG_SOCIAL_LIKE');
+        Configuration::deleteByName('CS24BLOG_IMAGE_TYPE');
         
-        Configuration::deleteByName('LEOBLOG_DASHBOARD_DEFAULTTAB');
-        Configuration::deleteByName('LEOBLOG_CFG_GLOBAL');
+        Configuration::deleteByName('CS24BLOG_DASHBOARD_DEFAULTTAB');
+        Configuration::deleteByName('CS24BLOG_CFG_GLOBAL');
         return true;
     }
 
@@ -909,11 +909,19 @@ class Leoblog extends Module
 
     private function _installDataSample()
     {
-        if (file_exists(_PS_MODULE_DIR_.'leoelements/libs/LeoDataSample.php')) {
+        // Support for Creative Elements first
+        if (file_exists(_PS_MODULE_DIR_.'creativeelements/libs/LeoDataSample.php')) {
+            require_once(_PS_MODULE_DIR_.'creativeelements/libs/LeoDataSample.php');
+        }
+        // Then LeoElements
+        elseif (file_exists(_PS_MODULE_DIR_.'leoelements/libs/LeoDataSample.php')) {
             require_once(_PS_MODULE_DIR_.'leoelements/libs/LeoDataSample.php');
-        }elseif (file_exists(_PS_MODULE_DIR_.'appagebuilder/libs/LeoDataSample.php')) {
+        }
+        // Finally AppPageBuilder
+        elseif (file_exists(_PS_MODULE_DIR_.'appagebuilder/libs/LeoDataSample.php')) {
             require_once(_PS_MODULE_DIR_.'appagebuilder/libs/LeoDataSample.php');
-        }else{
+        }
+        else{
             return false;
         }
 
@@ -949,7 +957,7 @@ class Leoblog extends Module
             $default_rewrite = array();
             $module = Validate::isModuleName(Tools::getValue('module')) ? Tools::getValue('module') : '';
             $controller = Tools::getValue('controller');
-            if ($module == 'leoblog' && $controller == 'blog' && ($id_blog = (int)Tools::getValue('id'))) {
+            if ($module == 'cs24blog' && $controller == 'blog' && ($id_blog = (int)Tools::getValue('id'))) {
                 $languages = Language::getLanguages(true, $this->context->shop->id);
                 if (!count($languages)) {
                     return false;
@@ -957,7 +965,7 @@ class Leoblog extends Module
                 $link = new Link();
 
                 foreach ($languages as $lang) {
-                    $config = LeoBlogConfig::getInstance();
+                    $config = Cs24BlogConfig::getInstance();
                     $config->cur_id_lang = $lang['id_lang'];
 
                     $cur_key = 'link_rewrite'.'_'.Context::getContext()->language->id;
@@ -966,12 +974,12 @@ class Leoblog extends Module
                     $other_key = 'link_rewrite'.'_'.$lang['id_lang'];
                     $other_prefix = '/'.$config->cur_prefix_rewrite = $config->get($other_key, 'blog').'/';
 
-                    $blog = new LeoBlogBlog($id_blog, $lang['id_lang']);
+                    $blog = new Cs24BlogBlog($id_blog, $lang['id_lang']);
                     $temp_link = $link->getModuleLink($module, $controller, array('id' => $id_blog, 'rewrite' => $blog->link_rewrite), null, $lang['id_lang']);
                     $default_rewrite[$lang['id_lang']] = str_replace($cur_prefix, $other_prefix, $temp_link);
 //                    $default_rewrite[$lang['id_lang']] = $link->getModuleLink($module, $controller, array('id'=>$id_blog, 'rewrite'=>$blog->link_rewrite), null, $lang['id_lang']);
                 }
-            } elseif ($module == 'leoblog' && $controller == 'category' && ($id_blog = (int)Tools::getValue('id'))) {
+            } elseif ($module == 'cs24blog' && $controller == 'category' && ($id_blog = (int)Tools::getValue('id'))) {
                 $languages = Language::getLanguages(true, $this->context->shop->id);
                 if (!count($languages)) {
                     return false;
@@ -979,7 +987,7 @@ class Leoblog extends Module
                 $link = new Link();
 
                 foreach ($languages as $lang) {
-                    $config = LeoBlogConfig::getInstance();
+                    $config = Cs24BlogConfig::getInstance();
                     $config->cur_id_lang = $lang['id_lang'];
 
                     $cur_key = 'link_rewrite'.'_'.Context::getContext()->language->id;
@@ -988,12 +996,12 @@ class Leoblog extends Module
                     $other_key = 'link_rewrite'.'_'.$lang['id_lang'];
                     $other_prefix = '/'.$config->cur_prefix_rewrite = $config->get($other_key, 'blog').'/';
 
-                    $blog = new Leoblogcat($id_blog, $lang['id_lang']);
+                    $blog = new Cs24BlogCat($id_blog, $lang['id_lang']);
                     $temp_link = $link->getModuleLink($module, $controller, array('id' => $id_blog, 'rewrite' => $blog->link_rewrite), null, $lang['id_lang']);
                     $default_rewrite[$lang['id_lang']] = str_replace($cur_prefix, $other_prefix, $temp_link);
 //                    $default_rewrite[$lang['id_lang']] = $link->getModuleLink($module, $controller, array('id'=>$id_blog, 'rewrite'=>$blog->link_rewrite), null, $lang['id_lang']);
                 }
-            } elseif ($module == 'leoblog' && $controller == 'list') {
+            } elseif ($module == 'cs24blog' && $controller == 'list') {
                 $languages = Language::getLanguages(true, $this->context->shop->id);
                 if (!count($languages)) {
                     return false;
@@ -1001,7 +1009,7 @@ class Leoblog extends Module
                 $link = new Link();
 
                 foreach ($languages as $lang) {
-                    $config = LeoBlogConfig::getInstance();
+                    $config = Cs24BlogConfig::getInstance();
                     $config->cur_id_lang = $lang['id_lang'];
 
                     $cur_key = 'link_rewrite'.'_'.Context::getContext()->language->id;
@@ -1028,8 +1036,8 @@ class Leoblog extends Module
         unset($params);
         $this->smarty->assign(array(
             'hook_name' => 'hookDisplayTop',
-            'title' => LeoBlogConfig::getInstance()->get('blog_link_title_'.Context::getContext()->language->id, 'Blog'),
-            'link' => LeoBlogHelper::getInstance()->getFontBlogLink(),
+            'title' => Cs24BlogConfig::getInstance()->get('blog_link_title_'.Context::getContext()->language->id, 'Blog'),
+            'link' => Cs24BlogHelper::getInstance()->getFontBlogLink(),
         ));
         return $this->display(__FILE__, 'link_list.tpl');
     }
@@ -1039,7 +1047,7 @@ class Leoblog extends Module
      */
     public function hookModuleRoutes($route = '', $detail = array())
     {
-        $config = LeoBlogConfig::getInstance();
+        $config = Cs24BlogConfig::getInstance();
         Configuration::deleteByName('PS_ROUTE_module-leoblog-list');
         Configuration::deleteByName('PS_ROUTE_module-leoblog-blog');
         Configuration::deleteByName('PS_ROUTE_module-leoblog-category');
@@ -1053,7 +1061,7 @@ class Leoblog extends Module
             ),
             'params' => array(
                 'fc' => 'module',
-                'module' => 'leoblog'
+                'module' => 'cs24blog'
             )
         );
         if (Tools::getIsset('configure') && Tools::getValue('configure') == 'gsitemap') {
@@ -1070,7 +1078,7 @@ class Leoblog extends Module
                 ),
                 'params' => array(
                     'fc' => 'module',
-                    'module' => 'leoblog',
+                    'module' => 'cs24blog',
                     
                 )
             );
@@ -1084,7 +1092,7 @@ class Leoblog extends Module
                 ),
                 'params' => array(
                     'fc' => 'module',
-                    'module' => 'leoblog',
+                    'module' => 'cs24blog',
                             
                 )
             );
@@ -1104,7 +1112,7 @@ class Leoblog extends Module
                 ),
                 'params' => array(
                     'fc' => 'module',
-                    'module' => 'leoblog',
+                    'module' => 'cs24blog',
                 )
             );
 
@@ -1117,7 +1125,7 @@ class Leoblog extends Module
                 ),
                 'params' => array(
                     'fc' => 'module',
-                    'module' => 'leoblog',
+                    'module' => 'cs24blog',
                 )
             );
         }
@@ -1131,23 +1139,33 @@ class Leoblog extends Module
      */
     public function getBlogsFont($params)
     {
-        $config = LeoBlogConfig::getInstance();
+        $config = Cs24BlogConfig::getInstance();
         $id_categories = '';
         if (isset($params['chk_cat'])) {
             # validate module
             $id_categories = $params['chk_cat'];
         }
-        $order_by = isset($params['order_by']) ? $params['order_by'] : 'id_leoblog_blog';
+        $order_by = isset($params['order_by']) ? $params['order_by'] : 'id_cs24_blog_blog';
         $order_way = isset($params['order_way']) ? $params['order_way'] : 'DESC';
-        $helper = LeoBlogHelper::getInstance();
+        $helper = Cs24BlogHelper::getInstance();
         $limit = (int)$params['nb_blogs'];
-        $blogs = LeoBlogBlog::getListBlogsForApPageBuilder($id_categories, $this->context->language->id, $limit, $order_by, $order_way, array(), true);
+        $blogs = Cs24BlogBlog::getListBlogsForApPageBuilder($id_categories, $this->context->language->id, $limit, $order_by, $order_way, array(), true);
         // $authors = array(); #validate module
         $image_w = (int)$config->get('listing_leading_img_width', 690);
         $image_h = (int)$config->get('listing_leading_img_height', 300);
         foreach ($blogs as $key => &$blog) {
-            $blog = LeoBlogHelper::buildBlog($helper, $blog, $image_w, $image_h, $config, true);
+            $blog = Cs24BlogHelper::buildBlog($helper, $blog, $image_w, $image_h, $config, true);
             
+            // Support for Creative Elements
+            if ((bool)Module::isEnabled('creativeelements')) {
+                $creativeelements = Module::getInstanceByName('creativeelements');
+                if (method_exists($creativeelements, 'buildShortCode')) {
+                    $blog['description'] = $creativeelements->buildShortCode($blog['description']);
+                    $blog['content'] = $creativeelements->buildShortCode($blog['content']);
+                }
+            }
+
+            // Support for AppPageBuilder
             if ((bool)Module::isEnabled('appagebuilder')) {
                 $appagebuilder = Module::getInstanceByName('appagebuilder');
                 $blog['description'] = $appagebuilder->buildShortCode($blog['description']);
@@ -1202,7 +1220,12 @@ class Leoblog extends Module
         
         # WHENE INSTALL THEME, INSERT HOOK FROM DATASAMPLE IN THEME
         $primary_module = 'appagebuilder';
-        if (file_exists(_PS_MODULE_DIR_.'leoelements/libs/LeoDataSample.php')) {
+        // Check for Creative Elements first
+        if (file_exists(_PS_MODULE_DIR_.'creativeelements/libs/LeoDataSample.php')) {
+            $primary_module = 'creativeelements';
+        }
+        // Then LeoElements
+        elseif (file_exists(_PS_MODULE_DIR_.'leoelements/libs/LeoDataSample.php')) {
             $primary_module = 'leoelements';
         }
         $hook_from_theme = false;
@@ -1277,22 +1300,22 @@ class Leoblog extends Module
     public function correctModule()
     {
         //DONGND:: check thumb column, if not exist auto add
-        if (Db::getInstance()->executeS('SHOW TABLES LIKE \'%leoblog_blog%\'') && count(Db::getInstance()->executes('SELECT "thumb" FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = "'._DB_NAME_.'" AND TABLE_NAME = "'._DB_PREFIX_.'leoblog_blog" AND COLUMN_NAME = "thumb"'))<1) {
-            Db::getInstance()->execute('ALTER TABLE `'._DB_PREFIX_.'leoblog_blog` ADD `thumb` varchar(255) DEFAULT NULL');
+        if (Db::getInstance()->executeS('SHOW TABLES LIKE \'%cs24_blog_blog%\'') && count(Db::getInstance()->executes('SELECT "thumb" FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = "'._DB_NAME_.'" AND TABLE_NAME = "'._DB_PREFIX_.'cs24_blog_blog" AND COLUMN_NAME = "thumb"'))<1) {
+            Db::getInstance()->execute('ALTER TABLE `'._DB_PREFIX_.'cs24_blog_blog` ADD `thumb` varchar(255) DEFAULT NULL');
         }
         
         //DONGND:: check author name column, if not exist auto add
-        // Db::getInstance()->execute('ALTER TABLE `'._DB_PREFIX_.'leoblog_blog` ADD `author_name` varchar(255) DEFAULT NULL');
-        if (Db::getInstance()->executeS('SHOW TABLES LIKE \'%leoblog_blog%\'') && count(Db::getInstance()->executes('SELECT "author_name" FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = "'._DB_NAME_.'" AND TABLE_NAME = "'._DB_PREFIX_.'leoblog_blog" AND COLUMN_NAME = "author_name"'))<1) {
-            Db::getInstance()->execute('ALTER TABLE `'._DB_PREFIX_.'leoblog_blog` ADD `author_name` varchar(255) DEFAULT NULL');
+        // Db::getInstance()->execute('ALTER TABLE `'._DB_PREFIX_.'cs24_blog_blog` ADD `author_name` varchar(255) DEFAULT NULL');
+        if (Db::getInstance()->executeS('SHOW TABLES LIKE \'%cs24_blog_blog%\'') && count(Db::getInstance()->executes('SELECT "author_name" FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = "'._DB_NAME_.'" AND TABLE_NAME = "'._DB_PREFIX_.'cs24_blog_blog" AND COLUMN_NAME = "author_name"'))<1) {
+            Db::getInstance()->execute('ALTER TABLE `'._DB_PREFIX_.'cs24_blog_blog` ADD `author_name` varchar(255) DEFAULT NULL');
         }
         // check `favorite` name column, if not exist auto add
-        if (Db::getInstance()->executeS('SHOW TABLES LIKE \'%leoblog_blog%\'') && count(Db::getInstance()->executes('SELECT "favorite" FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = "'._DB_NAME_.'" AND TABLE_NAME = "'._DB_PREFIX_.'leoblog_blog" AND COLUMN_NAME = "favorite"'))<1) {
-            Db::getInstance()->execute('ALTER TABLE `'._DB_PREFIX_.'leoblog_blog` ADD `favorite` tinyint(1) NOT NULL');
+        if (Db::getInstance()->executeS('SHOW TABLES LIKE \'%cs24_blog_blog%\'') && count(Db::getInstance()->executes('SELECT "favorite" FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = "'._DB_NAME_.'" AND TABLE_NAME = "'._DB_PREFIX_.'cs24_blog_blog" AND COLUMN_NAME = "favorite"'))<1) {
+            Db::getInstance()->execute('ALTER TABLE `'._DB_PREFIX_.'cs24_blog_blog` ADD `favorite` tinyint(1) NOT NULL');
         }
         // check `subtitle` name column, if not exist auto add
-        if (Db::getInstance()->executeS('SHOW TABLES LIKE \'%leoblog_blog_lang%\'') && count(Db::getInstance()->executes('SELECT "subtitle" FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = "'._DB_NAME_.'" AND TABLE_NAME = "'._DB_PREFIX_.'leoblog_blog_lang" AND COLUMN_NAME = "subtitle"'))<1) {
-            Db::getInstance()->execute('ALTER TABLE `'._DB_PREFIX_.'leoblog_blog_lang` ADD `subtitle` varchar(250) NULL');
+        if (Db::getInstance()->executeS('SHOW TABLES LIKE \'%cs24_blog_blog_lang%\'') && count(Db::getInstance()->executes('SELECT "subtitle" FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = "'._DB_NAME_.'" AND TABLE_NAME = "'._DB_PREFIX_.'cs24_blog_blog_lang" AND COLUMN_NAME = "subtitle"'))<1) {
+            Db::getInstance()->execute('ALTER TABLE `'._DB_PREFIX_.'cs24_blog_blog_lang` ADD `subtitle` varchar(250) NULL');
         }
         if (!is_dir(_PS_THEME_DIR_.'assets/img/modules/leoblog')) {
             $this->moveImageFolder();
@@ -1304,7 +1327,7 @@ class Leoblog extends Module
     {
         //DONGND:: copy image from module to theme
         if (!file_exists(_PS_THEME_DIR_.'assets/img/index.php')) {
-            @copy(_LEOBLOG_BLOG_IMG_DIR_.'index.php', _PS_THEME_DIR_.'assets/img/index.php');
+            @copy(_CS24BLOG_BLOG_IMG_DIR_.'index.php', _PS_THEME_DIR_.'assets/img/index.php');
         }
         
         if (!is_dir(_PS_THEME_DIR_.'assets/img/modules')) {
@@ -1312,7 +1335,7 @@ class Leoblog extends Module
         }
         
         if (!file_exists(_PS_THEME_DIR_.'assets/img/modules/index.php')) {
-            @copy(_LEOBLOG_BLOG_IMG_DIR_.'index.php', _PS_THEME_DIR_.'assets/img/modules/index.php');
+            @copy(_CS24BLOG_BLOG_IMG_DIR_.'index.php', _PS_THEME_DIR_.'assets/img/modules/index.php');
         }
         
         if (!is_dir(_PS_THEME_DIR_.'assets/img/modules/leoblog')) {
@@ -1320,7 +1343,7 @@ class Leoblog extends Module
         }
         
         if (!file_exists(_PS_THEME_DIR_.'assets/img/modules/leoblog/index.php')) {
-            @copy(_LEOBLOG_BLOG_IMG_DIR_.'index.php', _PS_THEME_DIR_.'assets/img/modules/leoblog/index.php');
+            @copy(_CS24BLOG_BLOG_IMG_DIR_.'index.php', _PS_THEME_DIR_.'assets/img/modules/leoblog/index.php');
         }
         
         if (!is_dir(_PS_THEME_DIR_.'assets/img/modules/leoblog/sample')) {
@@ -1329,28 +1352,28 @@ class Leoblog extends Module
             mkdir(_PS_THEME_DIR_.'assets/img/modules/leoblog/sample/b', 0777, true);
             mkdir(_PS_THEME_DIR_.'assets/img/modules/leoblog/sample/c', 0777, true);
             
-            if (is_dir(_LEOBLOG_BLOG_IMG_DIR_.'b') && is_dir(_PS_THEME_DIR_.'assets/img/modules/leoblog/sample/b')) {
-                $objects_b = scandir(_LEOBLOG_BLOG_IMG_DIR_.'b');
+            if (is_dir(_CS24BLOG_BLOG_IMG_DIR_.'b') && is_dir(_PS_THEME_DIR_.'assets/img/modules/leoblog/sample/b')) {
+                $objects_b = scandir(_CS24BLOG_BLOG_IMG_DIR_.'b');
                 $objects_theme_b = scandir(_PS_THEME_DIR_.'assets/img/modules/leoblog/sample/b');
                 if (count($objects_b) > 2 && count($objects_theme_b) <= 2) {
                     foreach ($objects_b as $objects_b_val) {
                         if ($objects_b_val != '.' && $objects_b_val != '..') {
-                            if (filetype(_LEOBLOG_BLOG_IMG_DIR_.'b'.'/'.$objects_b_val) == 'file') {
-                                @copy(_LEOBLOG_BLOG_IMG_DIR_.'b'.'/'.$objects_b_val, _PS_THEME_DIR_.'assets/img/modules/leoblog/sample/b/'.$objects_b_val);
+                            if (filetype(_CS24BLOG_BLOG_IMG_DIR_.'b'.'/'.$objects_b_val) == 'file') {
+                                @copy(_CS24BLOG_BLOG_IMG_DIR_.'b'.'/'.$objects_b_val, _PS_THEME_DIR_.'assets/img/modules/leoblog/sample/b/'.$objects_b_val);
                             }
                         }
                     }
                 }
             }
             
-            if (is_dir(_LEOBLOG_BLOG_IMG_DIR_.'c') && is_dir(_PS_THEME_DIR_.'assets/img/modules/leoblog/sample/c')) {
-                $objects_c = scandir(_LEOBLOG_BLOG_IMG_DIR_.'c');
+            if (is_dir(_CS24BLOG_BLOG_IMG_DIR_.'c') && is_dir(_PS_THEME_DIR_.'assets/img/modules/leoblog/sample/c')) {
+                $objects_c = scandir(_CS24BLOG_BLOG_IMG_DIR_.'c');
                 $objects_theme_c = scandir(_PS_THEME_DIR_.'assets/img/modules/leoblog/sample/c');
                 if (count($objects_c) > 2 && count($objects_theme_c) <= 2) {
                     foreach ($objects_c as $objects_c_val) {
                         if ($objects_c_val != '.' && $objects_c_val != '..') {
-                            if (filetype(_LEOBLOG_BLOG_IMG_DIR_.'c'.'/'.$objects_c_val) == 'file') {
-                                @copy(_LEOBLOG_BLOG_IMG_DIR_.'c'.'/'.$objects_c_val, _PS_THEME_DIR_.'assets/img/modules/leoblog/sample/c/'.$objects_c_val);
+                            if (filetype(_CS24BLOG_BLOG_IMG_DIR_.'c'.'/'.$objects_c_val) == 'file') {
+                                @copy(_CS24BLOG_BLOG_IMG_DIR_.'c'.'/'.$objects_c_val, _PS_THEME_DIR_.'assets/img/modules/leoblog/sample/c/'.$objects_c_val);
                             }
                         }
                     }
@@ -1359,7 +1382,7 @@ class Leoblog extends Module
         }
         
         if (!file_exists(_PS_THEME_DIR_.'assets/img/modules/leoblog/sample/index.php')) {
-            @copy(_LEOBLOG_BLOG_IMG_DIR_.'index.php', _PS_THEME_DIR_.'assets/img/modules/leoblog/sample/index.php');
+            @copy(_CS24BLOG_BLOG_IMG_DIR_.'index.php', _PS_THEME_DIR_.'assets/img/modules/leoblog/sample/index.php');
         }
         
         // if (!is_dir(_PS_THEME_DIR_.'assets/img/modules/leoblog/b')) {
@@ -1367,7 +1390,7 @@ class Leoblog extends Module
         // }
         
         // if (!file_exists(_PS_THEME_DIR_.'assets/img/modules/leoblog/b/index.php')) {
-            // @copy(_LEOBLOG_BLOG_IMG_DIR_.'index.php', _PS_THEME_DIR_.'assets/img/modules/leoblog/b/index.php');
+            // @copy(_CS24BLOG_BLOG_IMG_DIR_.'index.php', _PS_THEME_DIR_.'assets/img/modules/leoblog/b/index.php');
         // }
         
         // if (!is_dir(_PS_THEME_DIR_.'assets/img/modules/leoblog/c')) {
@@ -1375,45 +1398,45 @@ class Leoblog extends Module
         // }
         
         // if (!file_exists(_PS_THEME_DIR_.'assets/img/modules/leoblog/c/index.php')) {
-            // @copy(_LEOBLOG_BLOG_IMG_DIR_.'index.php', _PS_THEME_DIR_.'assets/img/modules/leoblog/c/index.php');
+            // @copy(_CS24BLOG_BLOG_IMG_DIR_.'index.php', _PS_THEME_DIR_.'assets/img/modules/leoblog/c/index.php');
         // }
         
         //DONGND:: get list id_shop from database of blog
-        $list_id_shop = Db::getInstance()->executes('SELECT `id_shop` FROM `'._DB_PREFIX_.'leoblog_blog_shop` GROUP BY `id_shop`');
+        $list_id_shop = Db::getInstance()->executes('SELECT `id_shop` FROM `'._DB_PREFIX_.'cs24_blog_blog_shop` GROUP BY `id_shop`');
             
         if (count($list_id_shop) > 0) {
             foreach ($list_id_shop as $list_id_shop_val) {
                 if (!is_dir(_PS_THEME_DIR_.'assets/img/modules/leoblog/'.$list_id_shop_val['id_shop'])) {
                     mkdir(_PS_THEME_DIR_.'assets/img/modules/leoblog/'.$list_id_shop_val['id_shop'], 0777, true);
                     
-                    @copy(_LEOBLOG_BLOG_IMG_DIR_.'index.php', _PS_THEME_DIR_.'assets/img/modules/leoblog/'.$list_id_shop_val['id_shop'].'/index.php');
+                    @copy(_CS24BLOG_BLOG_IMG_DIR_.'index.php', _PS_THEME_DIR_.'assets/img/modules/leoblog/'.$list_id_shop_val['id_shop'].'/index.php');
                     
                     mkdir(_PS_THEME_DIR_.'assets/img/modules/leoblog/'.$list_id_shop_val['id_shop'].'/b', 0777, true);
                     
                     mkdir(_PS_THEME_DIR_.'assets/img/modules/leoblog/'.$list_id_shop_val['id_shop'].'/c', 0777, true);
                     
-                    if (is_dir(_LEOBLOG_BLOG_IMG_DIR_.'b') && is_dir(_PS_THEME_DIR_.'assets/img/modules/leoblog/'.$list_id_shop_val['id_shop'].'/b')) {
-                        $objects_b = scandir(_LEOBLOG_BLOG_IMG_DIR_.'b');
+                    if (is_dir(_CS24BLOG_BLOG_IMG_DIR_.'b') && is_dir(_PS_THEME_DIR_.'assets/img/modules/leoblog/'.$list_id_shop_val['id_shop'].'/b')) {
+                        $objects_b = scandir(_CS24BLOG_BLOG_IMG_DIR_.'b');
                         $objects_theme_b = scandir(_PS_THEME_DIR_.'assets/img/modules/leoblog/'.$list_id_shop_val['id_shop'].'/b');
                         if (count($objects_b) > 2 && count($objects_theme_b) <= 2) {
                             foreach ($objects_b as $objects_b_val) {
                                 if ($objects_b_val != '.' && $objects_b_val != '..') {
-                                    if (filetype(_LEOBLOG_BLOG_IMG_DIR_.'b'.'/'.$objects_b_val) == 'file') {
-                                        @copy(_LEOBLOG_BLOG_IMG_DIR_.'b'.'/'.$objects_b_val, _PS_THEME_DIR_.'assets/img/modules/leoblog/'.$list_id_shop_val['id_shop'].'/b/'.$objects_b_val);
+                                    if (filetype(_CS24BLOG_BLOG_IMG_DIR_.'b'.'/'.$objects_b_val) == 'file') {
+                                        @copy(_CS24BLOG_BLOG_IMG_DIR_.'b'.'/'.$objects_b_val, _PS_THEME_DIR_.'assets/img/modules/leoblog/'.$list_id_shop_val['id_shop'].'/b/'.$objects_b_val);
                                     }
                                 }
                             }
                         }
                     }
                     
-                    if (is_dir(_LEOBLOG_BLOG_IMG_DIR_.'c') && is_dir(_PS_THEME_DIR_.'assets/img/modules/leoblog/'.$list_id_shop_val['id_shop'].'/c')) {
-                        $objects_c = scandir(_LEOBLOG_BLOG_IMG_DIR_.'c');
+                    if (is_dir(_CS24BLOG_BLOG_IMG_DIR_.'c') && is_dir(_PS_THEME_DIR_.'assets/img/modules/leoblog/'.$list_id_shop_val['id_shop'].'/c')) {
+                        $objects_c = scandir(_CS24BLOG_BLOG_IMG_DIR_.'c');
                         $objects_theme_c = scandir(_PS_THEME_DIR_.'assets/img/modules/leoblog/'.$list_id_shop_val['id_shop'].'/c');
                         if (count($objects_c) > 2 && count($objects_theme_c) <= 2) {
                             foreach ($objects_c as $objects_c_val) {
                                 if ($objects_c_val != '.' && $objects_c_val != '..') {
-                                    if (filetype(_LEOBLOG_BLOG_IMG_DIR_.'c'.'/'.$objects_c_val) == 'file') {
-                                        @copy(_LEOBLOG_BLOG_IMG_DIR_.'c'.'/'.$objects_c_val, _PS_THEME_DIR_.'assets/img/modules/leoblog/'.$list_id_shop_val['id_shop'].'/c/'.$objects_c_val);
+                                    if (filetype(_CS24BLOG_BLOG_IMG_DIR_.'c'.'/'.$objects_c_val) == 'file') {
+                                        @copy(_CS24BLOG_BLOG_IMG_DIR_.'c'.'/'.$objects_c_val, _PS_THEME_DIR_.'assets/img/modules/leoblog/'.$list_id_shop_val['id_shop'].'/c/'.$objects_c_val);
                                     }
                                 }
                             }
@@ -1433,13 +1456,27 @@ class Leoblog extends Module
                 && Tools::getIsset('submitAddshop') !== false && Tools::getValue('submitAddshop')
                 && Tools::getIsset('theme_name') !== false && Tools::getValue('theme_name')) {
             $shop = $param['return'];
-            
-            if (file_exists(_PS_MODULE_DIR_.'appagebuilder/libs/LeoDataSample.php')) {
+
+            // Support Creative Elements, LeoElements, or AppPageBuilder
+            $datasample_found = false;
+            if (file_exists(_PS_MODULE_DIR_.'creativeelements/libs/LeoDataSample.php')) {
+                require_once(_PS_MODULE_DIR_.'creativeelements/libs/LeoDataSample.php');
+                $datasample_found = true;
+            }
+            elseif (file_exists(_PS_MODULE_DIR_.'leoelements/libs/LeoDataSample.php')) {
+                require_once(_PS_MODULE_DIR_.'leoelements/libs/LeoDataSample.php');
+                $datasample_found = true;
+            }
+            elseif (file_exists(_PS_MODULE_DIR_.'appagebuilder/libs/LeoDataSample.php')) {
                 require_once(_PS_MODULE_DIR_.'appagebuilder/libs/LeoDataSample.php');
+                $datasample_found = true;
+            }
+
+            if ($datasample_found) {
                 $sample = new Datasample();
-                LeoBlogHelper::$id_shop = $shop->id;
+                Cs24BlogHelper::$id_shop = $shop->id;
                 $sample->_id_shop = $shop->id;
-                $sample->processImport('leoblog');
+                $sample->processImport('cs24blog');
             }
         }
     }

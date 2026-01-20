@@ -1,6 +1,6 @@
 <?php
 /**
- * 2007-2015 Leotheme
+ * 2024-2026 Compralosubito24
  *
  * NOTICE OF LICENSE
  *
@@ -8,9 +8,9 @@
  *
  * DISCLAIMER
  *
- *  @author    leotheme <leotheme@gmail.com>
- *  @copyright 2007-2015 Leotheme
- *  @license   http://leotheme.com - prestashop template provider
+ *  @author    Compralosubito24 <info@compralosubito24.it>
+ *  @copyright 2024-2026 Compralosubito24
+ *  @license   https://compralosubito24.it - prestashop template provider
  */
 
 if (!defined('_PS_VERSION_')) {
@@ -18,10 +18,10 @@ if (!defined('_PS_VERSION_')) {
     exit;
 }
 
-class Leoblogcat extends ObjectModel
+class Cs24BlogCat extends ObjectModel
 {
     public $id;
-    public $id_leoblogcat;
+    public $id_cs24_blog_cat;
     public $image;
     public $icon_class;
     public $id_parent = 1;
@@ -80,8 +80,8 @@ class Leoblogcat extends ObjectModel
      * @see ObjectModel::$definition
      */
     public static $definition = array(
-        'table' => 'leoblogcat',
-        'primary' => 'id_leoblogcat',
+        'table' => 'cs24_blog_cat',
+        'primary' => 'id_cs24_blog_cat',
         'multilang' => true,
         'fields' => array(
             'image' => array('type' => self::TYPE_STRING, 'validate' => 'isCatalogName'),
@@ -112,26 +112,26 @@ class Leoblogcat extends ObjectModel
         $id_shop = (int)Context::getContext()->shop->id;
         $id = 0;
         if (isset($parrams['link_rewrite']) && $parrams['link_rewrite']) {
-            $sql = 'SELECT cl.id_leoblogcat FROM '._DB_PREFIX_.'leoblogcat_lang cl';
-            $sql .= ' INNER JOIN '._DB_PREFIX_.'leoblogcat_shop cs on cl.id_leoblogcat=cs.id_leoblogcat AND id_shop='.$id_shop;
-            $sql .= ' INNER JOIN '._DB_PREFIX_.'leoblogcat      cc on cl.id_leoblogcat=cc.id_leoblogcat AND cl.id_leoblogcat != cc.id_parent';  # FIX : PARENT IS NOT THIS CATEGORY
+            $sql = 'SELECT cl.id_cs24_blog_cat FROM '._DB_PREFIX_.'cs24_blog_cat_lang cl';
+            $sql .= ' INNER JOIN '._DB_PREFIX_.'cs24_blog_cat_shop cs on cl.id_cs24_blog_cat=cs.id_cs24_blog_cat AND id_shop='.$id_shop;
+            $sql .= ' INNER JOIN '._DB_PREFIX_.'cs24_blog_cat      cc on cl.id_cs24_blog_cat=cc.id_cs24_blog_cat AND cl.id_cs24_blog_cat != cc.id_parent';  # FIX : PARENT IS NOT THIS CATEGORY
             //$sql .= ' WHERE id_lang = ' . $id_lang ." AND link_rewrite = '".$parrams['link_rewrite']."'";
             $sql .= " AND link_rewrite = '".pSQL($parrams['link_rewrite'])."'";
 
             if ($row = Db::getInstance()->getRow($sql)) {
-                $id = $row['id_leoblogcat'];
+                $id = $row['id_cs24_blog_cat'];
             }
         }
-        return new Leoblogcat($id, $id_lang);
+        return new Cs24BlogCat($id, $id_lang);
     }
 
     public function add($autodate = true, $null_values = false)
     {
         $this->position = self::getLastPosition((int)$this->id_parent);
         $this->level_depth = $this->calcLevelDepth();
-        $id_shop = LeoBlogHelper::getIDShop();
+        $id_shop = Cs24BlogHelper::getIDShop();
         $res = parent::add($autodate, $null_values);
-        $sql = 'INSERT INTO `'._DB_PREFIX_.'leoblogcat_shop` (`id_shop`, `id_leoblogcat`)
+        $sql = 'INSERT INTO `'._DB_PREFIX_.'cs24_blog_cat_shop` (`id_shop`, `id_cs24_blog_cat`)
             VALUES('.(int)$id_shop.', '.(int)$this->id.')';
         $res &= Db::getInstance()->execute($sql);
         $this->cleanPositions($this->id_parent);
@@ -144,19 +144,19 @@ class Leoblogcat extends ObjectModel
         return parent::update($null_values);
     }
 
-    protected function recursiveDelete(&$to_delete, $id_leoblogcat)
+    protected function recursiveDelete(&$to_delete, $id_cs24_blog_cat)
     {
-        if (!is_array($to_delete) || !$id_leoblogcat) {
+        if (!is_array($to_delete) || !$id_cs24_blog_cat) {
             die(Tools::displayError());
         }
 
         $result = Db::getInstance()->executeS('
-        SELECT `id_leoblogcat`
-        FROM `'._DB_PREFIX_.'leoblogcat`
-        WHERE `id_parent` = '.(int)$id_leoblogcat);
+        SELECT `id_cs24_blog_cat`
+        FROM `'._DB_PREFIX_.'cs24_blog_cat`
+        WHERE `id_parent` = '.(int)$id_cs24_blog_cat);
         foreach ($result as $row) {
-            $to_delete[] = (int)$row['id_leoblogcat'];
-            $this->recursiveDelete($to_delete, (int)$row['id_leoblogcat']);
+            $to_delete[] = (int)$row['id_cs24_blog_cat'];
+            $this->recursiveDelete($to_delete, (int)$row['id_cs24_blog_cat']);
         }
     }
 
@@ -176,32 +176,32 @@ class Leoblogcat extends ObjectModel
         $list = count($to_delete) > 1 ? implode(',', array_map('intval', $to_delete)) : (int)$this->id;
         //delete blog
         //get all blog from category ID
-        //$where   = '`id_leoblogcat` IN (' . $list . ')';
-        $result_blog = Db::getInstance(_PS_USE_SQL_SLAVE_)->executeS('SELECT `id_leoblog_blog` as id FROM `'._DB_PREFIX_.'leoblog_blog` WHERE `id_leoblogcat` IN ('.pSQL($list).')');
+        //$where   = '`id_cs24_blog_cat` IN (' . $list . ')';
+        $result_blog = Db::getInstance(_PS_USE_SQL_SLAVE_)->executeS('SELECT `id_cs24_blog_blog` as id FROM `'._DB_PREFIX_.'cs24_blog_blog` WHERE `id_cs24_blog_cat` IN ('.pSQL($list).')');
         foreach ($result_blog as $value) {
-            $blog = new LeoBlogBlog($value['id']);
+            $blog = new Cs24BlogBlog($value['id']);
             $blog->delete();
         }
 
 
-        Db::getInstance()->execute('DELETE FROM `'._DB_PREFIX_.'leoblogcat` WHERE `id_leoblogcat` IN ('.pSQL($list).')');
-        Db::getInstance()->execute('DELETE FROM `'._DB_PREFIX_.'leoblogcat_shop` WHERE `id_leoblogcat` IN ('.pSQL($list).')');
-        Db::getInstance()->execute('DELETE FROM `'._DB_PREFIX_.'leoblogcat_lang` WHERE `id_leoblogcat` IN ('.pSQL($list).')');
-        leoblogcat::cleanPositions($this->id_parent);
+        Db::getInstance()->execute('DELETE FROM `'._DB_PREFIX_.'cs24_blog_cat` WHERE `id_cs24_blog_cat` IN ('.pSQL($list).')');
+        Db::getInstance()->execute('DELETE FROM `'._DB_PREFIX_.'cs24_blog_cat_shop` WHERE `id_cs24_blog_cat` IN ('.pSQL($list).')');
+        Db::getInstance()->execute('DELETE FROM `'._DB_PREFIX_.'cs24_blog_cat_lang` WHERE `id_cs24_blog_cat` IN ('.pSQL($list).')');
+        cs24_blog_cat::cleanPositions($this->id_parent);
         return true;
     }
 
     public static function countCats()
     {
-        $row = Db::getInstance()->executeS('SELECT COUNT(id_leoblogcat) as total FROM `'._DB_PREFIX_.'leoblogcat` WHERE  id_leoblogcat!=1 AND 1=1');
+        $row = Db::getInstance()->executeS('SELECT COUNT(id_cs24_blog_cat) as total FROM `'._DB_PREFIX_.'cs24_blog_cat` WHERE  id_cs24_blog_cat!=1 AND 1=1');
         return $row[0]['total'];
     }
 
     public function deleteSelection($menus)
     {
         $return = 1;
-        foreach ($menus as $id_leoblogcat) {
-            $obj_menu = new Leoblogcat($id_leoblogcat);
+        foreach ($menus as $id_cs24_blog_cat) {
+            $obj_menu = new Cs24BlogCat($id_cs24_blog_cat);
             $return &= $obj_menu->delete();
         }
         return $return;
@@ -209,17 +209,17 @@ class Leoblogcat extends ObjectModel
 
     public function calcLevelDepth()
     {
-        $parentleoblogcat = new Leoblogcat($this->id_parent);
-        if (!$parentleoblogcat) {
+        $parentcs24_blog_cat = new Cs24BlogCat($this->id_parent);
+        if (!$parentcs24_blog_cat) {
             die('parent Menu does not exist');
         }
-        return $parentleoblogcat->level_depth + 1;
+        return $parentcs24_blog_cat->level_depth + 1;
     }
 
     public function updatePosition($way, $position)
     {
-        $sql = 'SELECT cp.`id_leoblogcat`, cp.`position`, cp.`id_parent`
-            FROM `'._DB_PREFIX_.'leoblogcat` cp
+        $sql = 'SELECT cp.`id_cs24_blog_cat`, cp.`position`, cp.`id_parent`
+            FROM `'._DB_PREFIX_.'cs24_blog_cat` cp
             WHERE cp.`id_parent` = '.(int)$this->id_parent.'
             ORDER BY cp.`position` ASC';
         !$res = Db::getInstance()->executeS($sql);
@@ -228,7 +228,7 @@ class Leoblogcat extends ObjectModel
         }
         
         foreach ($res as $menu) {
-            if ((int)$menu['id_leoblogcat'] == (int)$this->id) {
+            if ((int)$menu['id_cs24_blog_cat'] == (int)$this->id) {
                 $moved_menu = $menu;
             }
         }
@@ -239,31 +239,31 @@ class Leoblogcat extends ObjectModel
         // < and > statements rather than BETWEEN operator
         // since BETWEEN is treated differently according to databases
         return (Db::getInstance()->execute('
-            UPDATE `'._DB_PREFIX_.'leoblogcat`
+            UPDATE `'._DB_PREFIX_.'cs24_blog_cat`
             SET `position`= `position` '.($way ? '- 1' : '+ 1').'
             WHERE `position`
             '.($way ? '> '.(int)$moved_menu['position'].' AND `position` <= '.(int)$position : '< '.(int)$moved_menu['position'].' AND `position` >= '.(int)$position).'
             AND `id_parent`='.(int)$moved_menu['id_parent']) && Db::getInstance()->execute('
-            UPDATE `'._DB_PREFIX_.'leoblogcat`
+            UPDATE `'._DB_PREFIX_.'cs24_blog_cat`
             SET `position` = '.(int)$position.'
             WHERE `id_parent` = '.(int)$moved_menu['id_parent'].'
-            AND `id_leoblogcat`='.(int)$moved_menu['id_leoblogcat']));
+            AND `id_cs24_blog_cat`='.(int)$moved_menu['id_cs24_blog_cat']));
     }
 
     public static function cleanPositions($id_parent)
     {
         $result = Db::getInstance()->executeS('
-        SELECT `id_leoblogcat`
-        FROM `'._DB_PREFIX_.'leoblogcat`
+        SELECT `id_cs24_blog_cat`
+        FROM `'._DB_PREFIX_.'cs24_blog_cat`
         WHERE `id_parent` = '.(int)$id_parent.'
         ORDER BY `position`');
         $sizeof = count($result);
         for ($i = 0; $i < $sizeof; ++$i) {
             $sql = '
-            UPDATE `'._DB_PREFIX_.'leoblogcat`
+            UPDATE `'._DB_PREFIX_.'cs24_blog_cat`
             SET `position` = '.(int)$i.'
             WHERE `id_parent` = '.(int)$id_parent.'
-            AND `id_leoblogcat` = '.(int)$result[$i]['id_leoblogcat'];
+            AND `id_cs24_blog_cat` = '.(int)$result[$i]['id_cs24_blog_cat'];
             Db::getInstance()->execute($sql);
         }
         return true;
@@ -271,10 +271,10 @@ class Leoblogcat extends ObjectModel
 
     public static function getLastPosition($id_parent)
     {
-        return (Db::getInstance()->getValue('SELECT MAX(position)+1 FROM `'._DB_PREFIX_.'leoblogcat` WHERE `id_parent` = '.(int)$id_parent));
+        return (Db::getInstance()->getValue('SELECT MAX(position)+1 FROM `'._DB_PREFIX_.'cs24_blog_cat` WHERE `id_parent` = '.(int)$id_parent));
     }
 
-    public function getInfo($id_leoblogcat, $id_lang = null, $id_shop = null)
+    public function getInfo($id_cs24_blog_cat, $id_lang = null, $id_shop = null)
     {
         if (!$id_lang) {
             $id_lang = Context::getContext()->language->id;
@@ -284,14 +284,14 @@ class Leoblogcat extends ObjectModel
         }
         $sql = 'SELECT m.*, md.title, md.description, md.content_text
                 FROM '._DB_PREFIX_.'megamenu m
-                LEFT JOIN '._DB_PREFIX_.'leoblogcat_lang md ON m.id_leoblogcat = md.id_leoblogcat AND md.id_lang = '.(int)$id_lang
-                .' JOIN '._DB_PREFIX_.'leoblogcat_shop bs ON m.id_leoblogcat = bs.id_leoblogcat AND bs.id_shop = '.(int)($id_shop);
-        $sql .= ' WHERE m.id_leoblogcat='.(int)$id_leoblogcat;
+                LEFT JOIN '._DB_PREFIX_.'cs24_blog_cat_lang md ON m.id_cs24_blog_cat = md.id_cs24_blog_cat AND md.id_lang = '.(int)$id_lang
+                .' JOIN '._DB_PREFIX_.'cs24_blog_cat_shop bs ON m.id_cs24_blog_cat = bs.id_cs24_blog_cat AND bs.id_shop = '.(int)($id_shop);
+        $sql .= ' WHERE m.id_cs24_blog_cat='.(int)$id_cs24_blog_cat;
 
         return Db::getInstance()->executeS($sql);
     }
 
-    public function getChild($id_leoblogcat = null, $id_lang = null, $id_shop = null, $active = false)
+    public function getChild($id_cs24_blog_cat = null, $id_lang = null, $id_shop = null, $active = false)
     {
         if (!$id_lang) {
             $id_lang = Context::getContext()->language->id;
@@ -301,22 +301,22 @@ class Leoblogcat extends ObjectModel
         }
 
         $sql = ' SELECT m.*, md.*
-                FROM '._DB_PREFIX_.'leoblogcat m
-                LEFT JOIN '._DB_PREFIX_.'leoblogcat_lang md ON m.id_leoblogcat = md.id_leoblogcat AND md.id_lang = '.(int)$id_lang
-                .' JOIN '._DB_PREFIX_.'leoblogcat_shop bs ON m.id_leoblogcat = bs.id_leoblogcat AND bs.id_shop = '.(int)($id_shop);
+                FROM '._DB_PREFIX_.'cs24_blog_cat m
+                LEFT JOIN '._DB_PREFIX_.'cs24_blog_cat_lang md ON m.id_cs24_blog_cat = md.id_cs24_blog_cat AND md.id_lang = '.(int)$id_lang
+                .' JOIN '._DB_PREFIX_.'cs24_blog_cat_shop bs ON m.id_cs24_blog_cat = bs.id_cs24_blog_cat AND bs.id_shop = '.(int)($id_shop);
         if ($active) {
             $sql .= ' WHERE m.`active`=1 ';
         }
 
-        if ($id_leoblogcat != null) {
+        if ($id_cs24_blog_cat != null) {
             # validate module
-            $sql .= ' WHERE id_parent='.(int)$id_leoblogcat;
+            $sql .= ' WHERE id_parent='.(int)$id_cs24_blog_cat;
         }
         $sql .= ' ORDER BY `position` ';
         return Db::getInstance()->executeS($sql);
     }
 
-    public function getAllChild($id_leoblogcat = null, $id_lang = null, $id_shop = null, $active = false)
+    public function getAllChild($id_cs24_blog_cat = null, $id_lang = null, $id_shop = null, $active = false)
     {
         if (!$id_lang) {
             $id_lang = Context::getContext()->language->id;
@@ -325,17 +325,17 @@ class Leoblogcat extends ObjectModel
             $id_shop = Context::getContext()->shop->id;
         }
 
-        $sql = ' SELECT m.id_leoblogcat AS id_category, m.id_parent, md.title AS name
-                FROM '._DB_PREFIX_.'leoblogcat m
-                LEFT JOIN '._DB_PREFIX_.'leoblogcat_lang md ON m.id_leoblogcat = md.id_leoblogcat AND md.id_lang = '.(int)$id_lang
-                .' JOIN '._DB_PREFIX_.'leoblogcat_shop bs ON m.id_leoblogcat = bs.id_leoblogcat AND bs.id_shop = '.(int)($id_shop);
+        $sql = ' SELECT m.id_cs24_blog_cat AS id_category, m.id_parent, md.title AS name
+                FROM '._DB_PREFIX_.'cs24_blog_cat m
+                LEFT JOIN '._DB_PREFIX_.'cs24_blog_cat_lang md ON m.id_cs24_blog_cat = md.id_cs24_blog_cat AND md.id_lang = '.(int)$id_lang
+                .' JOIN '._DB_PREFIX_.'cs24_blog_cat_shop bs ON m.id_cs24_blog_cat = bs.id_cs24_blog_cat AND bs.id_shop = '.(int)($id_shop);
         if ($active) {
             $sql .= ' WHERE m.`active`=1 ';
         }
 
-        if ($id_leoblogcat != null) {
+        if ($id_cs24_blog_cat != null) {
             # validate module
-            $sql .= ' WHERE id_parent='.(int)$id_leoblogcat;
+            $sql .= ' WHERE id_parent='.(int)$id_cs24_blog_cat;
         }
         $sql .= ' ORDER BY `position` ';
         return Db::getInstance()->executeS($sql);
@@ -392,10 +392,10 @@ class Leoblogcat extends ObjectModel
         if ($this->hasChild($parent)) {
             $data = $this->getNodes($parent);
             foreach ($data as $menu) {
-                //$select = $selected == $menu['id_leoblogcat'] ? 'selected="selected"' : "";
-                $output[] = array('id' => $menu['id_leoblogcat'], 'title' => str_repeat('-', $level).' '.$menu['title'].' (ID:'.$menu['id_leoblogcat'].')', 'selected' => $selected);
-                if ($menu['id_leoblogcat'] != $parent) {
-                    $output = $this->genOption($menu['id_leoblogcat'], $level + 1, $selected, $output);
+                //$select = $selected == $menu['id_cs24_blog_cat'] ? 'selected="selected"' : "";
+                $output[] = array('id' => $menu['id_cs24_blog_cat'], 'title' => str_repeat('-', $level).' '.$menu['title'].' (ID:'.$menu['id_cs24_blog_cat'].')', 'selected' => $selected);
+                if ($menu['id_cs24_blog_cat'] != $parent) {
+                    $output = $this->genOption($menu['id_cs24_blog_cat'], $level + 1, $selected, $output);
                 }
             }
         }
@@ -412,8 +412,8 @@ class Leoblogcat extends ObjectModel
                 'level' => $level,
                 't' => $t,
                 'data' => $data,
-                'param_id_leoblogcat' => Tools::getValue('id_leoblogcat'),
-                'model_leoblogcat' => $this,
+                'param_id_cs24_blog_cat' => Tools::getValue('id_cs24_blog_cat'),
+                'model_cs24_blog_cat' => $this,
             ));
             return Context::getContext()->smarty->fetch($this->getTemplatePath().'genTree.tpl');
         }
@@ -422,7 +422,7 @@ class Leoblogcat extends ObjectModel
     
     public function getTemplatePath()
     {
-        return _PS_MODULE_DIR_ . 'leoblog/views/templates/admin/';
+        return _PS_MODULE_DIR_ . 'cs24blog/views/templates/admin/';
     }
 
     public function genTreeForApPageBuilder($parent, $level, $select = array())
@@ -435,7 +435,7 @@ class Leoblogcat extends ObjectModel
                 'level' => $level,
                 'data' => $data,
                 'select' => $select,
-                'model_leoblogcat' => $this,
+                'model_cs24_blog_cat' => $this,
             ));
             return Context::getContext()->smarty->fetch($this->getTemplatePath().'genTreeForApPageBuilder.tpl');
         }
@@ -487,28 +487,28 @@ class Leoblogcat extends ObjectModel
                 if (isset($menu['active']) && $menu['active']) {
                     $params = array(
                         'rewrite' => $menu['link_rewrite'],
-                        'id' => $menu['id_leoblogcat']
+                        'id' => $menu['id_cs24_blog_cat']
                     );
 
                     $category_link = $helper->getBlogCatLink($params);
 
-                    $cls = Tools::getValue('id_leoblogcat') == $menu['id_leoblogcat'] ? 'selected' : '';
-                    $output .= '<li id="list_'.$menu['id_leoblogcat'].'" class="'.$cls.' '.$menu['menu_class'].'"><a href="'.$category_link.'" title="'.$menu['title'].'">';
+                    $cls = Tools::getValue('id_cs24_blog_cat') == $menu['id_cs24_blog_cat'] ? 'selected' : '';
+                    $output .= '<li id="list_'.$menu['id_cs24_blog_cat'].'" class="'.$cls.' '.$menu['menu_class'].'"><a href="'.$category_link.'" title="'.$menu['title'].'">';
                     if ($menu['icon_class']) {
                         $output .= '<i class="'.$menu['icon_class'].'"></i>';
                     }
                     $output .= '<span>'.$menu['title'].'</span></a> ';
 
-                    if ($menu['id_leoblogcat'] != $parent) {
+                    if ($menu['id_cs24_blog_cat'] != $parent) {
                         # validate module
-                        if ($this->hasChild($menu['id_leoblogcat']) && $child_active) {
-                            $output .= '<div class="navbar-toggler collapse-icons" data-toggle="collapse" data-target="#sub_'.$menu['id_leoblogcat'].'">
+                        if ($this->hasChild($menu['id_cs24_blog_cat']) && $child_active) {
+                            $output .= '<div class="navbar-toggler collapse-icons" data-toggle="collapse" data-target="#sub_'.$menu['id_cs24_blog_cat'].'">
                                 <i class="material-icons add">add</i>
                                 <i class="material-icons remove">remove</i>
                             </div>';
                         }
 
-                        $output .= $this->genFontEndTree($menu['id_leoblogcat'], $level + 1, $helper, $child_active);
+                        $output .= $this->genFontEndTree($menu['id_cs24_blog_cat'], $level + 1, $helper, $child_active);
                     }
                     $output .= '</li>';
                 }
@@ -527,9 +527,9 @@ class Leoblogcat extends ObjectModel
         
         $rows = Db::getInstance()->executes($sql);
         foreach ($rows as $row) {
-            $mod_group = new Leoblogcat((int)$row[self::$definition['primary']]);
-            include_once(_PS_MODULE_DIR_.'leoblog/libs/Helper.php');
-            $mod_group->randkey = LeoBlogHelper::genKey();
+            $mod_group = new Cs24BlogCat((int)$row[self::$definition['primary']]);
+            include_once(_PS_MODULE_DIR_.'cs24blog/libs/Helper.php');
+            $mod_group->randkey = Cs24BlogHelper::genKey();
             try {
                 # Try caught to remove validate
                 $mod_group->update();

@@ -1,6 +1,6 @@
 <?php
 /**
- * 2007-2015 Leotheme
+ * 2024-2026 Compralosubito24
  *
  * NOTICE OF LICENSE
  *
@@ -8,14 +8,14 @@
  *
  * DISCLAIMER
  *
- *  @author    leotheme <leotheme@gmail.com>
- *  @copyright 2007-2015 Leotheme
- *  @license   http://leotheme.com - prestashop template provider
+ *  @author    Compralosubito24 <info@compralosubito24.it>
+ *  @copyright 2024-2026 Compralosubito24
+ *  @license   https://compralosubito24.it - prestashop template provider
  */
 
 include_once(_PS_MODULE_DIR_.'leoblog/loader.php');
 
-class LeobloglistModuleFrontController extends ModuleFrontController
+class Cs24bloglistModuleFrontController extends ModuleFrontController
 {
     public $php_self;
     protected $template_path = '';
@@ -24,7 +24,7 @@ class LeobloglistModuleFrontController extends ModuleFrontController
     {
         parent::__construct();
         $this->context = Context::getContext();
-        $this->template_path = _PS_MODULE_DIR_.'leoblog/views/templates/front/';
+        $this->template_path = _PS_MODULE_DIR_.'cs24blog/views/templates/front/';
     }
 
     /**
@@ -35,15 +35,15 @@ class LeobloglistModuleFrontController extends ModuleFrontController
         // $this->php_self = 'module-leoblog-list';
         $this->php_self = 'list';
         
-        $config = LeoBlogConfig::getInstance();
+        $config = Cs24BlogConfig::getInstance();
         $authors = array();
 
         /* Load Css and JS File */
-        LeoBlogHelper::loadMedia($this->context, $this);
+        Cs24BlogHelper::loadMedia($this->context, $this);
 
         parent::initContent();
 
-        $helper = LeoBlogHelper::getInstance();
+        $helper = Cs24BlogHelper::getInstance();
 
         $limit_leading_blogs = (int)$config->get('listing_leading_limit_items', 1);
         $limit_secondary_blogs = (int)$config->get('listing_secondary_limit_items', 6);
@@ -56,27 +56,27 @@ class LeobloglistModuleFrontController extends ModuleFrontController
 
         // set link demo
         if (Tools::getValue('bloglayout') != null) {
-            if (is_dir(_PS_THEME_DIR_.'modules/leoblog/views/templates/front/'.Tools::getValue('bloglayout'))) {
+            if (is_dir(_PS_THEME_DIR_.'modules/cs24blog/views/templates/front/'.Tools::getValue('bloglayout'))) {
                 $template = Tools::getValue('bloglayout');
-            } elseif (is_dir(_PS_MODULE_DIR_ .'leoblog/views/templates/front/'.Tools::getValue('bloglayout'))) {
+            } elseif (is_dir(_PS_MODULE_DIR_ .'cs24blog/views/templates/front/'.Tools::getValue('bloglayout'))) {
                 $template = Tools::getValue('bloglayout');
             }
         }
         //set file include
-        if (is_dir(_PS_THEME_DIR_.'modules/leoblog/views/templates/front/'.$template) || is_dir(_PS_MODULE_DIR_.'leoblog/views/templates/front/'.$template)) {
-            if (file_exists(_PS_THEME_DIR_.'modules/leoblog/views/templates/front/'.$template.'/_listing_blog.tpl') || file_exists(_PS_MODULE_DIR_.'leoblog/views/templates/front/'.$template.'/_listing_blog.tpl')) {
-                $_listing_blog = 'module:leoblog/views/templates/front/'.$template.'/_listing_blog.tpl';
+        if (is_dir(_PS_THEME_DIR_.'modules/cs24blog/views/templates/front/'.$template) || is_dir(_PS_MODULE_DIR_.'cs24blog/views/templates/front/'.$template)) {
+            if (file_exists(_PS_THEME_DIR_.'modules/cs24blog/views/templates/front/'.$template.'/_listing_blog.tpl') || file_exists(_PS_MODULE_DIR_.'cs24blog/views/templates/front/'.$template.'/_listing_blog.tpl')) {
+                $_listing_blog = 'module:cs24blog/views/templates/front/'.$template.'/_listing_blog.tpl';
             } else {
-                $_listing_blog = 'module:leoblog/views/templates/front/default/_listing_blog.tpl';
+                $_listing_blog = 'module:cs24blog/views/templates/front/default/_listing_blog.tpl';
             }
 
-            if (file_exists(_PS_THEME_DIR_.'modules/leoblog/views/templates/front/'.$template.'/_pagination.tpl') || file_exists(_PS_MODULE_DIR_.'leoblog/views/templates/front/'.$template.'/_pagination.tpl')) {
-                $_pagination = 'module:leoblog/views/templates/front/'.$template.'/_pagination.tpl';
+            if (file_exists(_PS_THEME_DIR_.'modules/cs24blog/views/templates/front/'.$template.'/_pagination.tpl') || file_exists(_PS_MODULE_DIR_.'cs24blog/views/templates/front/'.$template.'/_pagination.tpl')) {
+                $_pagination = 'module:cs24blog/views/templates/front/'.$template.'/_pagination.tpl';
             } else {
-                $_pagination = 'module:leoblog/views/templates/front/default/_pagination.tpl';
+                $_pagination = 'module:cs24blog/views/templates/front/default/_pagination.tpl';
             }
 
-            if (!file_exists(_PS_THEME_DIR_.'modules/leoblog/views/templates/front/'.$template.'/listing.tpl') && !file_exists(_PS_MODULE_DIR_.'leoblog/views/templates/front/'.$template.'/listing.tpl')) {
+            if (!file_exists(_PS_THEME_DIR_.'modules/cs24blog/views/templates/front/'.$template.'/listing.tpl') && !file_exists(_PS_MODULE_DIR_.'cs24blog/views/templates/front/'.$template.'/listing.tpl')) {
                 $template = 'default';
             }
         }
@@ -107,8 +107,8 @@ class LeobloglistModuleFrontController extends ModuleFrontController
             $r = $helper->getPaginationLink('module-leoblog-list', 'list', array('tag' => $tag));
         }
 
-        $blogs = LeoBlogBlog::getListBlogs(null, $this->context->language->id, $p, $n, 'id_leoblog_blog', 'DESC', $condition, true);
-        $count = LeoBlogBlog::countBlogs(null, $this->context->language->id, $condition, true);
+        $blogs = Cs24BlogBlog::getListBlogs(null, $this->context->language->id, $p, $n, 'id_cs24_blog_blog', 'DESC', $condition, true);
+        $count = Cs24BlogBlog::countBlogs(null, $this->context->language->id, $condition, true);
 
         $leading_blogs = array();
         $secondary_blogs = array();
@@ -120,7 +120,7 @@ class LeobloglistModuleFrontController extends ModuleFrontController
         $image_w = (int)$config->get('listing_leading_img_width', 690);
         $image_h = (int)$config->get('listing_leading_img_height', 300);
         foreach ($leading_blogs as $key => $blog) {
-            $blog = LeoBlogHelper::buildBlog($helper, $blog, $image_w, $image_h, $config);
+            $blog = Cs24BlogHelper::buildBlog($helper, $blog, $image_w, $image_h, $config);
             if ($blog['id_employee']) {
                 if (!isset($authors[$blog['id_employee']])) {
                     # validate module
@@ -146,7 +146,7 @@ class LeobloglistModuleFrontController extends ModuleFrontController
         $image_h = (int)$config->get('listing_secondary_img_height', 200);
 
         foreach ($secondary_blogs as $key => $blog) {
-            $blog = LeoBlogHelper::buildBlog($helper, $blog, $image_w, $image_h, $config);
+            $blog = Cs24BlogHelper::buildBlog($helper, $blog, $image_w, $image_h, $config);
             if ($blog['id_employee']) {
                 if (!isset($authors[$blog['id_employee']])) {
                     # validate module
@@ -189,7 +189,7 @@ class LeobloglistModuleFrontController extends ModuleFrontController
         $url_rss = '';
         $enbrss = (int)$config->get('indexation', 0);
         if ($enbrss == 1) {
-            $url_rss = Tools::htmlentitiesutf8('http://'.$_SERVER['HTTP_HOST'].__PS_BASE_URI__).'modules/leoblog/rss.php';
+            $url_rss = Tools::htmlentitiesutf8('http://'.$_SERVER['HTTP_HOST'].__PS_BASE_URI__).'modules/cs24blog/rss.php';
         }
         
         if ((bool)Module::isEnabled('appagebuilder')) {
@@ -224,25 +224,25 @@ class LeobloglistModuleFrontController extends ModuleFrontController
             '_listing_blog' => $_listing_blog,
             '_pagination' => $_pagination
         ));
-        $this->setTemplate('module:leoblog/views/templates/front/'.$template.'/listing.tpl');
+        $this->setTemplate('module:cs24blog/views/templates/front/'.$template.'/listing.tpl');
     }
     
     public function getTemplateVarPage()
     {
         $page = parent::getTemplateVarPage();
-        $config = LeoBlogConfig::getInstance();
+        $config = Cs24BlogConfig::getInstance();
         $page['meta']['title'] = $config->get('meta_title_'.Context::getContext()->language->id, 'Blog').' - '.Configuration::get('PS_SHOP_NAME');
         $page['meta']['keywords'] = $config->get('meta_keywords_'.Context::getContext()->language->id);
         $page['meta']['description'] = $config->get('meta_description_'.Context::getContext()->language->id);
-        $page['canonical'] = LeoBlogHelper::getInstance()->getFontBlogLink();
+        $page['canonical'] = Cs24BlogHelper::getInstance()->getFontBlogLink();
         return $page;
     }
     
     public function getBreadcrumbLinks()
     {
         $breadcrumb = parent::getBreadcrumbLinks();
-        $link = LeoBlogHelper::getInstance()->getFontBlogLink();
-        $config = LeoBlogConfig::getInstance();
+        $link = Cs24BlogHelper::getInstance()->getFontBlogLink();
+        $config = Cs24BlogConfig::getInstance();
         $breadcrumb['links'][] = array(
             'title' => $config->get('blog_link_title_'.$this->context->language->id, $this->l('Blog', 'list')),
             'url' => $link,

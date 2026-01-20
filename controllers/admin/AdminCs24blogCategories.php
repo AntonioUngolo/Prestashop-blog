@@ -1,6 +1,6 @@
 <?php
 /**
- * 2007-2015 Leotheme
+ * 2024-2026 Compralosubito24
  *
  * NOTICE OF LICENSE
  *
@@ -8,14 +8,14 @@
  *
  * DISCLAIMER
  *
- *  @author    leotheme <leotheme@gmail.com>
- *  @copyright 2007-2015 Leotheme
- *  @license   http://leotheme.com - prestashop template provider
+ *  @author    Compralosubito24 <info@compralosubito24.it>
+ *  @copyright 2024-2026 Compralosubito24
+ *  @license   https://compralosubito24.it - prestashop template provider
  */
 
 include_once(_PS_MODULE_DIR_.'leoblog/loader.php');
 
-class AdminLeoblogCategoriesController extends ModuleAdminController
+class AdminCs24blogCategoriesController extends ModuleAdminController
 {
     public $name = 'leoblog';
     protected $fields_form = array();
@@ -24,10 +24,10 @@ class AdminLeoblogCategoriesController extends ModuleAdminController
     public function __construct()
     {
         $this->bootstrap = true;
-        $this->id_leoblogcat = true;
-        $this->table = 'leoblogcat';
+        $this->id_cs24_blog_cat = true;
+        $this->table = 'cs24_blog_cat';
 
-        $this->className = 'leoblogcat';
+        $this->className = 'cs24_blog_cat';
         $this->lang = true;
         $this->fields_options = array();
         
@@ -44,8 +44,8 @@ class AdminLeoblogCategoriesController extends ModuleAdminController
         //DONGND:: update new direction for media
         $media_dir = $this->module->getMediaDir();
         $this->context->controller->addCss(__PS_BASE_URI__.'js/jquery/ui/themes/base/jquery.ui.tabs.css');
-        if (file_exists(_PS_THEME_DIR_.'css/modules/leoblog/assets/admin/form.css')) {
-            $this->context->controller->addCss(__PS_BASE_URI__.'modules/leoblog/assets/admin/form.css');
+        if (file_exists(_PS_THEME_DIR_.'css/modules/cs24blog/assets/admin/form.css')) {
+            $this->context->controller->addCss(__PS_BASE_URI__.'modules/cs24blog/assets/admin/form.css');
         } else {
             $this->context->controller->addCss(__PS_BASE_URI__.$media_dir.'css/admin/form.css');
         }
@@ -65,13 +65,13 @@ class AdminLeoblogCategoriesController extends ModuleAdminController
         $this->addJqueryPlugin('tagify');
         $this->context->controller->addJS(__PS_BASE_URI__.'js/jquery/ui/jquery.ui.sortable.min.js');
         $media_dir = $this->module->getMediaDir();
-        if (file_exists(_PS_THEME_DIR_.'js/modules/leoblog/assets/admin/jquery.nestable.js')) {
-            $this->context->controller->addJS(__PS_BASE_URI__.'modules/leoblog/assets/admin/jquery.nestable.js');
+        if (file_exists(_PS_THEME_DIR_.'js/modules/cs24blog/assets/admin/jquery.nestable.js')) {
+            $this->context->controller->addJS(__PS_BASE_URI__.'modules/cs24blog/assets/admin/jquery.nestable.js');
         } else {
             $this->context->controller->addJS(__PS_BASE_URI__.$media_dir.'js/admin/jquery.nestable.js');
         }
-        if (file_exists(_PS_THEME_DIR_.'js/modules/leoblog/assets/admin/form.js')) {
-            $this->context->controller->addJS(__PS_BASE_URI__.'modules/leoblog/assets/admin/form.js');
+        if (file_exists(_PS_THEME_DIR_.'js/modules/cs24blog/assets/admin/form.js')) {
+            $this->context->controller->addJS(__PS_BASE_URI__.'modules/cs24blog/assets/admin/form.js');
         } else {
             $this->context->controller->addJS(__PS_BASE_URI__.$media_dir.'js/admin/form.js');
         }
@@ -112,9 +112,9 @@ class AdminLeoblogCategoriesController extends ModuleAdminController
             $res = true;
             foreach ($child as $id_parent => $menus) {
                 $i = 0;
-                foreach ($menus as $id_leoblogcat) {
-                    $sql = 'UPDATE `'._DB_PREFIX_.'leoblogcat` SET `position` = '.(int)$i.', id_parent = '.(int)$id_parent.'
-                            WHERE `id_leoblogcat` = '.(int)$id_leoblogcat;
+                foreach ($menus as $id_cs24_blog_cat) {
+                    $sql = 'UPDATE `'._DB_PREFIX_.'cs24_blog_cat` SET `position` = '.(int)$i.', id_parent = '.(int)$id_parent.'
+                            WHERE `id_cs24_blog_cat` = '.(int)$id_cs24_blog_cat;
                     $res &= Db::getInstance()->execute($sql);
                     $i++;
                 }
@@ -123,7 +123,7 @@ class AdminLeoblogCategoriesController extends ModuleAdminController
         }
         /* delete megamenu item */
         if (Tools::getValue('dodel')) {
-            $obj = new Leoblogcat((int)Tools::getValue('id_leoblogcat'));
+            $obj = new Cs24BlogCat((int)Tools::getValue('id_cs24_blog_cat'));
             $res = $obj->delete();
             Tools::redirectAdmin(AdminController::$currentIndex.'&token='.Tools::getValue('token'));
         }
@@ -132,7 +132,7 @@ class AdminLeoblogCategoriesController extends ModuleAdminController
             if (is_array($list) && $list) {
                 #validate module
                 foreach ($list as $id) {
-                    $obj = new Leoblogcat((int)$id);
+                    $obj = new Cs24BlogCat((int)$id);
                     if ($obj->id) {
                         $obj->delete();
                     }
@@ -142,24 +142,24 @@ class AdminLeoblogCategoriesController extends ModuleAdminController
         }
         
         if (Tools::isSubmit('save'.$this->name) && Tools::isSubmit('active')) {
-            if ($id_leoblogcat = Tools::getValue('id_leoblogcat')) {
+            if ($id_cs24_blog_cat = Tools::getValue('id_cs24_blog_cat')) {
                 # validate module
-                $megamenu = new leoblogcat((int)$id_leoblogcat);
+                $megamenu = new cs24_blog_cat((int)$id_cs24_blog_cat);
             } else {
                 # validate module
-                $megamenu = new leoblogcat();
-                $megamenu->randkey = LeoBlogHelper::genKey();
+                $megamenu = new cs24_blog_cat();
+                $megamenu->randkey = Cs24BlogHelper::genKey();
             }
             $this->copyFromPost($megamenu, $this->table);
             $id_shop = (int)Context::getContext()->shop->id;
             
-            LeoBlogHelper::buildFolder($id_shop);
+            Cs24BlogHelper::buildFolder($id_shop);
             $megamenu->id_shop = $this->context->shop->id;
             
             if ($megamenu->validateFields(false) && $megamenu->validateFieldsLang(false)) {
                 $megamenu->save();
                 if (isset($_FILES['image_link']) && isset($_FILES['image_link']['tmp_name']) && !empty($_FILES['image_link']['tmp_name'])) {
-                    $folder_theme = _PS_ROOT_DIR_.'/themes/' . LeoBlogHelper::getThemeName().'/';
+                    $folder_theme = _PS_ROOT_DIR_.'/themes/' . Cs24BlogHelper::getThemeName().'/';
                     
                     if ($megamenu->image != '') {
                         $old_image = $megamenu->image;
@@ -169,18 +169,18 @@ class AdminLeoblogCategoriesController extends ModuleAdminController
                         return false;
                     } elseif (!($tmp_name = tempnam(_PS_TMP_IMG_DIR_, 'PS')) || !move_uploaded_file($_FILES['image_link']['tmp_name'], $tmp_name)) {
                         return false;
-                    } elseif (!ImageManager::resize($tmp_name, $folder_theme.'assets/img/modules/leoblog/'.$id_shop.'/c/'.$_FILES['image_link']['name'])) {
+                    } elseif (!ImageManager::resize($tmp_name, $folder_theme.'assets/img/modules/cs24blog/'.$id_shop.'/c/'.$_FILES['image_link']['name'])) {
                         return false;
                     }
                     unlink($tmp_name);
                     $megamenu->image = $_FILES['image_link']['name'];
                     if (isset($old_image)) {
-                        unlink($folder_theme.'assets/img/modules/leoblog/'.$id_shop.'/c/'.$old_image);
+                        unlink($folder_theme.'assets/img/modules/cs24blog/'.$id_shop.'/c/'.$old_image);
                     }
                     
                     $megamenu->save();
                 }
-                Tools::redirectAdmin(AdminController::$currentIndex.'&saveleoblog&token='.Tools::getValue('token').'&id_leoblogcat='.$megamenu->id);
+                Tools::redirectAdmin(AdminController::$currentIndex.'&saveleoblog&token='.Tools::getValue('token').'&id_cs24_blog_cat='.$megamenu->id);
             } else {
                 // validate module
                 $this->_html .= $this->displayWarning($this->l('An error occurred while attempting to save.'));
@@ -199,16 +199,16 @@ class AdminLeoblogCategoriesController extends ModuleAdminController
         $menus = $obj->getDropdown(null, $obj->id_parent);
 
         # FIX : PARENT IS NOT THIS CATEGORY
-        $id_leoblogcat = (int) (Tools::getValue('id_leoblogcat'));
+        $id_cs24_blog_cat = (int) (Tools::getValue('id_cs24_blog_cat'));
         foreach ($menus as $key => $menu) {
-            if ($menu['id'] == $id_leoblogcat) {
+            if ($menu['id'] == $id_cs24_blog_cat) {
                 unset($menus[$key]);
             }
         }
 
         $default_lang = (int)Configuration::get('PS_LANG_DEFAULT');
 
-        $templates = LeoBlogHelper::getTemplates();
+        $templates = Cs24BlogHelper::getTemplates();
 
         $soption = array(
             array(
@@ -231,7 +231,7 @@ class AdminLeoblogCategoriesController extends ModuleAdminController
                 array(
                     'type' => 'hidden',
                     'label' => $this->l('Category ID'),
-                    'name' => 'id_leoblogcat',
+                    'name' => 'id_cs24_blog_cat',
                     'default' => 0,
                 ),
                 array(
@@ -448,7 +448,7 @@ class AdminLeoblogCategoriesController extends ModuleAdminController
                     //if ($input['name'] == 'image_link' && $data) {
                     if ($input['name'] == 'image_link' && $obj->image != '') {
                         //$thumb = __PS_BASE_URI__.'modules/'.$this->name.'/views/img/c/'.$data;
-                        $thumb = _THEMES_DIR_.LeoBlogHelper::getThemeName().'/assets/img/modules/leoblog/'.$id_shop.'/c/'.$obj->image;
+                        $thumb = _THEMES_DIR_.Cs24BlogHelper::getThemeName().'/assets/img/modules/cs24blog/'.$id_shop.'/c/'.$obj->image;
                         $this->fields_form[$k]['form']['input'][$j]['thumb'] = $thumb;
                     }
                     

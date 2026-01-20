@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <module>
-    <name>leoblog</name>
-    <displayName><![CDATA[Leo Blog Gestione]]></displayName>
-    <version><![CDATA[3.1.0]]></version>
+    <name>cs24blog</name>
+    <displayName><![CDATA[Compralosubito24 Blog]]></displayName>
+    <version><![CDATA[1.0.0]]></version>
     <description><![CDATA[Gestire Blog Contenuti]]></description>
-    <author><![CDATA[LeoTheme]]></author>
+    <author><![CDATA[Compralosubito24]]></author>
     <tab><![CDATA[front_office_features]]></tab>
     <is_configurable>1</is_configurable>
     <need_instance>0</need_instance>
