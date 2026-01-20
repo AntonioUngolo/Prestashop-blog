@@ -1303,7 +1303,7 @@ class Cs24blog extends Module
         if (Db::getInstance()->executeS('SHOW TABLES LIKE \'%cs24_blog_blog%\'') && count(Db::getInstance()->executes('SELECT "thumb" FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = "'._DB_NAME_.'" AND TABLE_NAME = "'._DB_PREFIX_.'cs24_blog_blog" AND COLUMN_NAME = "thumb"'))<1) {
             Db::getInstance()->execute('ALTER TABLE `'._DB_PREFIX_.'cs24_blog_blog` ADD `thumb` varchar(255) DEFAULT NULL');
         }
-        
+
         //DONGND:: check author name column, if not exist auto add
         // Db::getInstance()->execute('ALTER TABLE `'._DB_PREFIX_.'cs24_blog_blog` ADD `author_name` varchar(255) DEFAULT NULL');
         if (Db::getInstance()->executeS('SHOW TABLES LIKE \'%cs24_blog_blog%\'') && count(Db::getInstance()->executes('SELECT "author_name" FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = "'._DB_NAME_.'" AND TABLE_NAME = "'._DB_PREFIX_.'cs24_blog_blog" AND COLUMN_NAME = "author_name"'))<1) {
@@ -1317,8 +1317,62 @@ class Cs24blog extends Module
         if (Db::getInstance()->executeS('SHOW TABLES LIKE \'%cs24_blog_blog_lang%\'') && count(Db::getInstance()->executes('SELECT "subtitle" FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = "'._DB_NAME_.'" AND TABLE_NAME = "'._DB_PREFIX_.'cs24_blog_blog_lang" AND COLUMN_NAME = "subtitle"'))<1) {
             Db::getInstance()->execute('ALTER TABLE `'._DB_PREFIX_.'cs24_blog_blog_lang` ADD `subtitle` varchar(250) NULL');
         }
+
+        // Fix missing admin tabs
+        $this->reinstallTabs();
+
         if (!is_dir(_PS_THEME_DIR_.'assets/img/modules/leoblog')) {
             $this->moveImageFolder();
+        }
+    }
+
+    /**
+     * Reinstall admin tabs if missing
+     */
+    private function reinstallTabs()
+    {
+        $id_parent = Tab::getIdFromClassName('IMPROVE');
+        $class = 'AdminCs24blogManagement';
+
+        // Check if main tab exists
+        $id_tab = Tab::getIdFromClassName($class);
+        if (!$id_tab) {
+            // Create main parent tab
+            $tab1 = new Tab();
+            $tab1->class_name = $class;
+            $tab1->module = $this->name;
+            $tab1->id_parent = $id_parent;
+            $langs = Language::getLanguages(false);
+            foreach ($langs as $l) {
+                $tab1->name[$l['id_lang']] = $this->l('Compralosubito24 Blog Management');
+            }
+            $tab1->add(true, false);
+
+            // Add icon
+            Db::getInstance()->execute('UPDATE `'._DB_PREFIX_.'tab` SET `icon` = "create" WHERE `id_tab` = "'.(int)$tab1->id.'"');
+        } else {
+            // Update module name if wrong
+            Db::getInstance()->execute('UPDATE `'._DB_PREFIX_.'tab` SET `module` = "cs24blog" WHERE `class_name` = "AdminCs24blogManagement"');
+        }
+
+        // Check and create child tabs
+        $tabs = array(
+            array('class' => 'dashboard', 'name' => 'Blog Dashboard'),
+            array('class' => 'categories', 'name' => 'Categories Management'),
+            array('class' => 'blogs', 'name' => 'Blogs Management'),
+            array('class' => 'comments', 'name' => 'Comment Management'),
+            array('class' => 'module', 'name' => 'Compralosubito24 Blog Configuration'),
+        );
+
+        foreach ($tabs as $tab_data) {
+            $child_class = 'AdminCs24blog'.Tools::ucfirst($tab_data['class']);
+            $id_child_tab = Tab::getIdFromClassName($child_class);
+            if (!$id_child_tab) {
+                $this->installModuleTab($tab_data['name'], $tab_data['class'], 'AdminCs24blogManagement');
+            } else {
+                // Update module name if wrong
+                Db::getInstance()->execute('UPDATE `'._DB_PREFIX_.'tab` SET `module` = "cs24blog" WHERE `class_name` = "'.$child_class.'"');
+            }
         }
     }
     
