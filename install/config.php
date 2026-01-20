@@ -1,6 +1,6 @@
 <?php
 /**
- * 2007-2015 Leotheme
+ * 2024-2026 Compralosubito24
  *
  * NOTICE OF LICENSE
  *
@@ -8,9 +8,9 @@
  *
  * DISCLAIMER
  *
- *  @author    leotheme <leotheme@gmail.com>
- *  @copyright 2007-2015 Leotheme
- *  @license   http://leotheme.com - prestashop template provider
+ *  @author    Compralosubito24 <info@compralosubito24.it>
+ *  @copyright 2024-2026 Compralosubito24
+ *  @license   https://compralosubito24.it - prestashop template provider
  */
 
 $blog_config = array(
@@ -75,4 +75,4 @@ $blog_config = array(
     'show_all_tags' => '0',
 );
 
-LeoBlogConfig::updateConfigValue('cfg_global', json_encode($blog_config));
+Cs24BlogConfig::updateConfigValue('cfg_global', json_encode($blog_config));

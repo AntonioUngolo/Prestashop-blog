@@ -32,9 +32,9 @@ include_once(dirname(__FILE__).'/classes/config.php');
 if (Tools::getIsset('action') && Tools::getValue('action') == 'loadDataTemplate') {
     $template = Tools::getValue('template');
     if ($template == 'default') {
-        $data = LeoBlogConfig::getConfigValue('cfg_global');
+        $data = Cs24BlogConfig::getConfigValue('cfg_global');
     } else {
-        $data = LeoBlogConfig::getConfigValue('cfg_global_'.$template);
+        $data = Cs24BlogConfig::getConfigValue('cfg_global_'.$template);
     }
     $id_lang = [];
     $languages = Language::getLanguages(false);

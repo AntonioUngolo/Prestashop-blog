@@ -1,6 +1,6 @@
 <?php
 /**
- * 2007-2015 Leotheme
+ * 2024-2026 Compralosubito24
  *
  * NOTICE OF LICENSE
  *
@@ -8,25 +8,25 @@
  *
  * DISCLAIMER
  *
- *  @author    leotheme <leotheme@gmail.com>
- *  @copyright 2007-2015 Leotheme
- *  @license   http://leotheme.com - prestashop template provider
+ *  @author    Compralosubito24 <info@compralosubito24.it>
+ *  @copyright 2024-2026 Compralosubito24
+ *  @license   https://compralosubito24.it - prestashop template provider
  */
 
 $langs = Language::getLanguages(false);
 $id_shop = Context::getContext()->shop->id;
-$res = (bool)Db::getInstance()->execute(' TRUNCATE TABLE `'._DB_PREFIX_.'leoblogcat`  ');
-$res = (bool)Db::getInstance()->execute('INSERT INTO `'._DB_PREFIX_."leoblogcat`  (`id_leoblogcat`, `image`, `id_parent`, `item`, `level_depth`, `active`, `position`, `submenu_content`, `privacy`, `position_type`, `menu_class`, `content`, `icon_class`, `level`, `left`, `right`, `date_add`, `date_upd`, `template`, `randkey`) VALUES
+$res = (bool)Db::getInstance()->execute(' TRUNCATE TABLE `'._DB_PREFIX_.'cs24_blog_cat`  ');
+$res = (bool)Db::getInstance()->execute('INSERT INTO `'._DB_PREFIX_."cs24_blog_cat`  (`id_cs24_blog_cat`, `image`, `id_parent`, `item`, `level_depth`, `active`, `position`, `submenu_content`, `privacy`, `position_type`, `menu_class`, `content`, `icon_class`, `level`, `left`, `right`, `date_add`, `date_upd`, `template`, `randkey`) VALUES
 (1, '', 0, NULL, 0, 0, 0, '', NULL, NULL, NULL, NULL, NULL, 0, 0, 0, NULL, NULL, '', 'ad30975ab88db9db59a40e3edfca0ab0'),
 (3, 'category-3.jpg', 1, '', 1, 1, 0, '', 0, '', '', '', '', 0, 0, 0, '2013-11-27 01:06:52', '2013-12-18 03:07:22', 'default', '5577844800e55bda2c0540af22ba96ce'),
 (4, 'category-2.jpg', 3, '', 2, 1, 0, '', 0, '', '', '', '', 0, 0, 0, '2013-11-27 01:07:34', '2013-12-18 03:07:50', 'default', '0abc8c406b64fa2f13f5a7cbecbfb67f'),
 (5, 'category-1.jpg', 3, NULL, 2, 1, 1, '', 0, NULL, '', NULL, '', 0, 0, 0, '2013-12-16 08:44:07', '2013-12-18 03:05:46', 'default', '1dcae6f22c5962b687451c98c27946f0');
 ");
 
-$res = (bool)Db::getInstance()->execute(' TRUNCATE TABLE `'._DB_PREFIX_.'leoblogcat_lang`  ');
+$res = (bool)Db::getInstance()->execute(' TRUNCATE TABLE `'._DB_PREFIX_.'cs24_blog_cat_lang`  ');
 
 foreach ($langs as $l) {
-    $sql = 'INSERT INTO `'._DB_PREFIX_."leoblogcat_lang` (`id_leoblogcat`, `id_lang`, `title`, `content_text`, `description`, `meta_keywords`, `meta_description`, `link_rewrite`) VALUES
+    $sql = 'INSERT INTO `'._DB_PREFIX_."cs24_blog_cat_lang` (`id_cs24_blog_cat`, `id_lang`, `title`, `content_text`, `description`, `meta_keywords`, `meta_description`, `link_rewrite`) VALUES
         (1, LANGUAGEID, 'Root', NULL, '', '', '', ''),
         (3, LANGUAGEID, 'Category 1', '<p>Odio ut pretium ligula quam Vestibulum consequat convallis fringilla Vestibulum nulla. Accumsan morbi tristique auctor. At risus pretium urna tortor metus fringilla interdum mauris tempor congue</p>', '', '', '\r\n', 'category-1'),
         (4, LANGUAGEID, 'Sub Category 1', '<p>Odio ut pretium ligula quam Vestibulum consequat convallis fringilla Vestibulum nulla. Accumsan morbi tristique auctor. At risus pretium urna tortor metus fringilla interdum mauris tempor congue</p>', '', 'joomla,prestashop,leotheme,pavothemes', '', 'sub-category-1'),
@@ -36,15 +36,15 @@ foreach ($langs as $l) {
     $res = (bool)Db::getInstance()->execute($sql);
 }
 
-$res = (bool)Db::getInstance()->execute(' TRUNCATE TABLE `'._DB_PREFIX_.'leoblogcat_shop`  ');
-$res = (bool)Db::getInstance()->execute('INSERT INTO `'._DB_PREFIX_.'leoblogcat_shop` (`id_leoblogcat`, `id_shop`) VALUES
+$res = (bool)Db::getInstance()->execute(' TRUNCATE TABLE `'._DB_PREFIX_.'cs24_blog_cat_shop`  ');
+$res = (bool)Db::getInstance()->execute('INSERT INTO `'._DB_PREFIX_.'cs24_blog_cat_shop` (`id_cs24_blog_cat`, `id_shop`) VALUES
 (1, '.$id_shop.'),
 (3, '.$id_shop.'),
 (4, '.$id_shop.'),
 (5, '.$id_shop.'); ');
 
-$res = (bool)Db::getInstance()->execute(' TRUNCATE TABLE `'._DB_PREFIX_.'leoblog_blog`  ');
-$res = (bool)Db::getInstance()->execute('INSERT INTO `'._DB_PREFIX_."leoblog_blog` (`id_leoblog_blog`, `id_leoblogcat`, `position`, `date_add`, `active`, `user_id`, `hits`, `image`, `thumb`, `date_upd`, `video_code`, `params`, `featured`, `indexation`, `id_employee`, `product_ids`, `favorite`) VALUES
+$res = (bool)Db::getInstance()->execute(' TRUNCATE TABLE `'._DB_PREFIX_.'cs24_blog_blog`  ');
+$res = (bool)Db::getInstance()->execute('INSERT INTO `'._DB_PREFIX_."cs24_blog_blog` (`id_cs24_blog_blog`, `id_cs24_blog_cat`, `position`, `date_add`, `active`, `user_id`, `hits`, `image`, `thumb`, `date_upd`, `video_code`, `params`, `featured`, `indexation`, `id_employee`, `product_ids`, `favorite`) VALUES
 (3, 4, 0, '2013-11-28', 1, 0, 40, 'b-blog-1.jpg', '', '2013-12-20 09:55:38', '<iframe width=\"560\" height=\"315\" src=\"//www.youtube.com/embed/lzY4lkT8ElU\" frameborder=\"0\" allowfullscreen></iframe>', '', 0, 1, 1, '', 0),
 (4, 4, 2, '2013-12-04', 1, 0, 105, 'b-blog-2.jpg', '', '2013-12-18 06:31:14', '', '', 0, 1, 1, '', 0),
 (5, 4, 3, '2013-12-16', 1, 0, 9, 'b-blog-3.jpg', '', '2013-12-19 01:21:28', '', '', 0, 0, 1, '', 1),
@@ -55,11 +55,11 @@ $res = (bool)Db::getInstance()->execute('INSERT INTO `'._DB_PREFIX_."leoblog_blo
 ");
 
 
-$res = (bool)Db::getInstance()->execute(' TRUNCATE TABLE `'._DB_PREFIX_.'leoblog_blog_lang`  ');
+$res = (bool)Db::getInstance()->execute(' TRUNCATE TABLE `'._DB_PREFIX_.'cs24_blog_blog_lang`  ');
 
 
 foreach ($langs as $l) {
-    $sql = 'INSERT INTO `'._DB_PREFIX_."leoblog_blog_lang`  (`id_leoblog_blog`, `id_lang`, `meta_description`, `meta_keywords`, `meta_title`, `subtitle`, `link_rewrite`, `content`, `description`, `tags`) VALUES
+    $sql = 'INSERT INTO `'._DB_PREFIX_."cs24_blog_blog_lang`  (`id_cs24_blog_blog`, `id_lang`, `meta_description`, `meta_keywords`, `meta_title`, `subtitle`, `link_rewrite`, `content`, `description`, `tags`) VALUES
     (3, LANGUAGEID, '', '', 'At risus pretium urna tortor metus fringilla', 'At risus pretium urna tortor metus fringilla', 'at-risus-pretium-urna-tortor-metus-fringilla', '<p>Odio ut pretium ligula quam Vestibulum consequat convallis fringilla Vestibulum nulla. Accumsan morbi tristique auctor. At risus pretium urna tortor metus fringilla interdum mauris tempor congue Odio ut pretium ligula quam Vestibulum consequat convallis fringilla Vestibulum nulla. Accumsan morbi tristique auctor. At risus pretium urna tortor metus fringilla interdum mauris tempor congue Odio ut pretium ligula quam Vestibulum consequat convallis fringilla Vestibulum nulla. Accumsan morbi tristique auctor. At risus pretium urna tortor metus fringilla interdum mauris tempor congue</p>\r\n<p> </p>\r\n<p>Odio ut pretium ligula quam Vestibulum consequat convallis fringilla Vestibulum nulla. Accumsan morbi tristique auctor. At risus pretium urna tortor metus fringilla interdum mauris tempor congue</p>\r\n<p> </p>\r\n<p>Odio ut pretium ligula quam Vestibulum consequat convallis fringilla Vestibulum nulla. Accumsan morbi tristique auctor. At risus pretium urna tortor metus fringilla interdum mauris tempor congue Odio ut pretium ligula quam Vestibulum consequat convallis fringilla Vestibulum nulla. Accumsan morbi tristique auctor. At risus pretium urna tortor metus fringilla interdum mauris tempor congue</p>\r\n<p> </p>\r\n<p>Odio ut pretium ligula quam Vestibulum consequat convallis fringilla Vestibulum nulla. Accumsan morbi tristique auctor. At risus pretium urna tortor metus fringilla interdum mauris tempor congue Odio ut pretium ligula quam Vestibulum consequat convallis fringilla Vestibulum nulla. Accumsan morbi tristique auctor. At risus pretium urna tortor metus fringilla interdum mauris tempor congue</p>', '<p>Odio ut pretium ligula quam Vestibulum consequat convallis fringilla Vestibulum nulla. Accumsan morbi tristique auctor. At risus pretium urna tortor metus fringilla interdum mauris tempor congue</p>', 'joomla,wordpress'),
     (4, LANGUAGEID, '', '', 'Ipsum cursus vestibulum at interdum Vivamus', 'Ipsum cursus vestibulum at interdum Vivamus', 'ipsum-cursus-vestibulum-at-interdum-vivamus', '<p>Donec tellus Nulla lorem Nullam elit id ut elit feugiat lacus. Congue eget dapibus congue tincidunt senectus nibh risus Phasellus tristique justo. Justo Pellentesque Donec lobortis faucibus Vestibulum Praesent mauris volutpat vitae metus. Ipsum cursus vestibulum at interdum Vivamus nunc fringilla Curabitur ac quis. Nam lacinia wisi tortor orci quis vitae. Donec tellus Nulla lorem Nullam elit id ut elit feugiat lacus. Congue eget dapibus congue tincidunt senectus nibh risus Phasellus tristique justo. Justo Pellentesque Donec lobortis faucibus Vestibulum Praesent mauris volutpat vitae metus. Ipsum cursus vestibulum at interdum Vivamus nunc fringilla Curabitur ac quis. Nam lacinia wisi tortor orci quis vitae. Donec tellus Nulla lorem Nullam elit id ut elit feugiat lacus. Congue eget dapibus congue tincidunt senectus nibh risus Phasellus tristique justo. Justo Pellentesque Donec lobortis faucibus Vestibulum Praesent mauris volutpat vitae metus. Ipsum cursus vestibulum at interdum Vivamus nunc fringilla Curabitur ac quis. Nam lacinia wisi tortor orci quis vitae.</p>\r\n<p>Donec tellus Nulla lorem Nullam elit id ut elit feugiat lacus. Congue eget dapibus congue tincidunt senectus nibh risus Phasellus tristique justo. Justo Pellentesque Donec lobortis faucibus Vestibulum Praesent mauris volutpat vitae metus. Ipsum cursus vestibulum at interdum Vivamus nunc fringilla Curabitur ac quis. Nam lacinia wisi tortor orci quis vitae.Donec tellus Nulla lorem Nullam elit id ut elit feugiat lacus. Congue eget dapibus congue tincidunt senectus nibh risus Phasellus tristique justo. Justo Pellentesque Donec lobortis faucibus Vestibulum Praesent mauris volutpat vitae metus. Ipsum cursus vestibulum at interdum Vivamus nunc fringilla Curabitur ac quis. Nam lacinia wisi tortor orci quis vitae.Donec tellus Nulla lorem Nullam elit id ut elit feugiat lacus. Congue eget dapibus congue tincidunt senectus nibh risus Phasellus tristique justo. Justo Pellentesque Donec lobortis faucibus Vestibulum Praesent mauris volutpat vitae metus. Ipsum cursus vestibulum at interdum Vivamus nunc fringilla Curabitur ac quis. Nam lacinia wisi tortor orci quis vitae.</p>', '<p>Donec tellus Nulla lorem Nullam elit id ut elit feugiat lacus. Congue eget dapibus congue tincidunt senectus nibh risus Phasellus tristique justo. Justo Pellentesque Donec lobortis faucibus</p>', 'joomla,prestashop,leotheme'),
     (5, LANGUAGEID, '', 'joomla,prestashop,leotheme,prestashop theme', 'Urna pretium elit mauris cursus Curabitur at elit Vestibulum', 'Urna pretium elit mauris cursus Curabitur at elit Vestibulum', 'urna-pretium-elit-mauris-cursus-curabitur-at-elit-vestibulum', '<p>Mi vitae magnis Fusce laoreet nibh felis porttitor laoreet Vestibulum faucibus. At Nulla id tincidunt ut sed semper vel Lorem condimentum ornare. Laoreet Vestibulum lacinia massa a commodo habitasse velit Vestibulum tincidunt In. Turpis at eleifend leo mi elit Aenean porta ac sed faucibus. Nunc urna Morbi fringilla vitae orci convallis condimentum auctor sit dui. Urna pretium elit mauris cursus Curabitur at elit Vestibulum.</p>', '<p>Mi vitae magnis Fusce laoreet nibh felis porttitor laoreet Vestibulum faucibus. At Nulla id tincidunt ut sed semper vel Lorem condimentum ornare.</p>', 'Joomla'),
@@ -72,8 +72,8 @@ foreach ($langs as $l) {
     $res = (bool)Db::getInstance()->execute($sql);
 }
 
-$res = (bool)Db::getInstance()->execute(' TRUNCATE TABLE `'._DB_PREFIX_.'leoblog_blog_shop`  ');
-$res = (bool)Db::getInstance()->execute('INSERT INTO `'._DB_PREFIX_.'leoblog_blog_shop` (`id_leoblog_blog`, `id_shop`) VALUES
+$res = (bool)Db::getInstance()->execute(' TRUNCATE TABLE `'._DB_PREFIX_.'cs24_blog_blog_shop`  ');
+$res = (bool)Db::getInstance()->execute('INSERT INTO `'._DB_PREFIX_.'cs24_blog_blog_shop` (`id_cs24_blog_blog`, `id_shop`) VALUES
 (3, '.$id_shop.'),
 (4, '.$id_shop.'),
 (5, '.$id_shop.'),
@@ -82,7 +82,7 @@ $res = (bool)Db::getInstance()->execute('INSERT INTO `'._DB_PREFIX_.'leoblog_blo
 (8, '.$id_shop.'),
 (9, '.$id_shop.'); ');
 
-$res = (bool)Db::getInstance()->execute(' TRUNCATE TABLE `'._DB_PREFIX_.'leoblog_comment`  ');
-$res = (bool)Db::getInstance()->execute('INSERT INTO `'._DB_PREFIX_."leoblog_comment` (`id_comment`, `id_shop` , `id_leoblog_blog`, `comment`, `active`, `date_add`, `user`, `email`) VALUES
+$res = (bool)Db::getInstance()->execute(' TRUNCATE TABLE `'._DB_PREFIX_.'cs24_blog_comment`  ');
+$res = (bool)Db::getInstance()->execute('INSERT INTO `'._DB_PREFIX_."cs24_blog_comment` (`id_comment`, `id_shop` , `id_cs24_blog_blog`, `comment`, `active`, `date_add`, `user`, `email`) VALUES
 (3, 1, 3, ' At Nulla id tincidunt ut sed semper vel Lorem condimentum ornare. Laoreet Vestibulum lacinia massa a commodo habitasse velit Vestibulum tincidunt In', 1, '2013-12-11 22:18:13', 'ha cong tien', 'tienhc@brainos.vn'),
 (4, 1, 3, ' At Nulla id tincidunt ut sed semper vel Lorem condimentum ornare. Laoreet Vestibulum lacinia massa a commodo habitasse velit Vestibulum tincidunt In', 1, '2013-12-11 22:18:33', 'ha cong tien', 'tienhc@brainos.vn');");

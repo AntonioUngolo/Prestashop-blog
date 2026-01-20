@@ -1,6 +1,6 @@
 <?php
 /**
- * 2007-2015 Leotheme
+ * 2024-2026 Compralosubito24
  *
  * NOTICE OF LICENSE
  *
@@ -8,15 +8,15 @@
  *
  * DISCLAIMER
  *
- *  @author    leotheme <leotheme@gmail.com>
- *  @copyright 2007-2015 Leotheme
- *  @license   http://leotheme.com - prestashop template provider
+ *  @author    Compralosubito24 <info@compralosubito24.it>
+ *  @copyright 2024-2026 Compralosubito24
+ *  @license   https://compralosubito24.it - prestashop template provider
  */
 
 include_once(_PS_MODULE_DIR_.'leoblog/loader.php');
-require_once(_PS_MODULE_DIR_.'leoblog/classes/comment.php');
+require_once(_PS_MODULE_DIR_.'cs24blog/classes/comment.php');
 
-class AdminLeoblogDashboardController extends ModuleAdminController
+class AdminCs24blogDashboardController extends ModuleAdminController
 {
 
     public function __construct()
@@ -42,33 +42,33 @@ class AdminLeoblogDashboardController extends ModuleAdminController
         }
             
         if (Tools::isSubmit('saveConfiguration')) {
-            $keys = LeoBlogHelper::getConfigKey(false);
+            $keys = Cs24BlogHelper::getConfigKey(false);
             $post = array();
             foreach ($keys as $key) {
                 # validate module
                 $post[$key] = Tools::getValue($key);
                 if ($key == 'social_code') {
-                    $post[$key] = LeoBlogHelper::correctEnCodeData(Tools::getValue($key));
+                    $post[$key] = Cs24BlogHelper::correctEnCodeData(Tools::getValue($key));
                 }
             }
 
-            $multi_lang_keys = LeoBlogHelper::getConfigKey(true);
+            $multi_lang_keys = Cs24BlogHelper::getConfigKey(true);
             foreach ($multi_lang_keys as $multi_lang_key) {
                 foreach (Language::getIDs(false) as $id_lang) {
                     $post[$multi_lang_key.'_'.(int)$id_lang] = Tools::getValue($multi_lang_key.'_'.(int)$id_lang);
                 }
             }
             // print_r(json_encode($post));die;
-            // Configuration::updateValue(Tools::strtoupper(_LEO_BLOG_PREFIX_.'cfg_global_'.$post['template']), json_encode($post));
+            // Configuration::updateValue(Tools::strtoupper(_CS24_BLOG_PREFIX_.'cfg_global_'.$post['template']), json_encode($post));
             if ($post['template'] != 'default') {
-                LeoBlogConfig::updateConfigValue('cfg_global_'.$post['template'], json_encode($post));
+                Cs24BlogConfig::updateConfigValue('cfg_global_'.$post['template'], json_encode($post));
             } else {
-                LeoBlogConfig::updateConfigValue('cfg_global', json_encode($post));
+                Cs24BlogConfig::updateConfigValue('cfg_global', json_encode($post));
             }
             
 
-            Configuration::updateValue(Tools::strtoupper(_LEO_BLOG_PREFIX_.'template_current'), $post['template']);
-            Configuration::updateValue('LEOBLOG_DASHBOARD_DEFAULTTAB', Tools::getValue('LEOBLOG_DASHBOARD_DEFAULTTAB'));
+            Configuration::updateValue(Tools::strtoupper(_CS24_BLOG_PREFIX_.'template_current'), $post['template']);
+            Configuration::updateValue('CS24BLOG_DASHBOARD_DEFAULTTAB', Tools::getValue('CS24BLOG_DASHBOARD_DEFAULTTAB'));
         }
     }
 
@@ -77,8 +77,8 @@ class AdminLeoblogDashboardController extends ModuleAdminController
         parent::setMedia($isNewTheme);
         $this->addJqueryUi('ui.widget');
         $this->addJqueryPlugin('tagify');
-        if (file_exists(_PS_THEME_DIR_.'js/modules/leoblog/assets/form.js')) {
-            $this->context->controller->addJS(__PS_BASE_URI__.'modules/leoblog/assets/admin/form.js');
+        if (file_exists(_PS_THEME_DIR_.'js/modules/cs24blog/assets/form.js')) {
+            $this->context->controller->addJS(__PS_BASE_URI__.'modules/cs24blog/assets/admin/form.js');
         } else {
             $this->context->controller->addJS(__PS_BASE_URI__.$this->module->getMediaDir().'js/admin/form.js');
         }
@@ -92,35 +92,35 @@ class AdminLeoblogDashboardController extends ModuleAdminController
 
         $quicktools[] = array(
             'title' => $this->l('Categories'),
-            'href' => $link->getAdminLink('AdminLeoblogCategories'),
+            'href' => $link->getAdminLink('AdminCs24blogCategories'),
             'icon' => 'icon-desktop',
             'class' => '',
         );
 
         $quicktools[] = array(
             'title' => $this->l('Add Category'),
-            'href' => $link->getAdminLink('AdminLeoblogCategories'),
+            'href' => $link->getAdminLink('AdminCs24blogCategories'),
             'icon' => 'icon-list',
             'class' => '',
         );
 
         $quicktools[] = array(
             'title' => $this->l('Blogs'),
-            'href' => $link->getAdminLink('AdminLeoblogBlogs'),
+            'href' => $link->getAdminLink('AdminCs24blogBlogs'),
             'icon' => 'icon-list',
             'class' => '',
         );
 
         $quicktools[] = array(
             'title' => $this->l('Add Blog'),
-            'href' => $link->getAdminLink('AdminLeoblogBlogs').'&addleoblog_blog',
+            'href' => $link->getAdminLink('AdminCs24blogBlogs').'&addcs24_blog_blog',
             'icon' => 'icon-list',
             'class' => '',
         );
 
         $quicktools[] = array(
             'title' => $this->l('Comments'),
-            'href' => $link->getAdminLink('AdminLeoblogComments'),
+            'href' => $link->getAdminLink('AdminCs24blogComments'),
             'icon' => 'icon-list',
             'class' => '',
         );
@@ -138,10 +138,10 @@ class AdminLeoblogDashboardController extends ModuleAdminController
             )
         );
 
-        //$obj           = new Leoblogcat();
+        //$obj           = new Cs24BlogCat();
         //$menus         = $obj->getDropdown(null, $obj->id_parent);
-        $templates = LeoBlogHelper::getTemplates();
-        $url_rss = Tools::htmlentitiesutf8('http://'.$_SERVER['HTTP_HOST'].__PS_BASE_URI__).'modules/leoblog/rss.php';
+        $templates = Cs24BlogHelper::getTemplates();
+        $url_rss = Tools::htmlentitiesutf8('http://'.$_SERVER['HTTP_HOST'].__PS_BASE_URI__).'modules/cs24blog/rss.php';
         $form = '';
 
         $this->fields_form[0]['form'] = array(
@@ -155,7 +155,7 @@ class AdminLeoblogDashboardController extends ModuleAdminController
                 // custom template
                 array(
                     'type' => 'hidden',
-                    'name' => 'LEOBLOG_DASHBOARD_DEFAULTTAB',
+                    'name' => 'CS24BLOG_DASHBOARD_DEFAULTTAB',
                     'default' => '',
                 ),
                 array(
@@ -723,10 +723,10 @@ class AdminLeoblogDashboardController extends ModuleAdminController
             )
         );
 
-        if (Configuration::get(Tools::strtoupper(_LEO_BLOG_PREFIX_.'template_current')) == 'default') {
-            $data = LeoBlogConfig::getConfigValue('cfg_global');
+        if (Configuration::get(Tools::strtoupper(_CS24_BLOG_PREFIX_.'template_current')) == 'default') {
+            $data = Cs24BlogConfig::getConfigValue('cfg_global');
         } else {
-            $data = LeoBlogConfig::getConfigValue('cfg_global_'.Configuration::get(Tools::strtoupper(_LEO_BLOG_PREFIX_.'template_current')));
+            $data = Cs24BlogConfig::getConfigValue('cfg_global_'.Configuration::get(Tools::strtoupper(_CS24_BLOG_PREFIX_.'template_current')));
         }
            
         $obj = new stdClass();
@@ -738,7 +738,7 @@ class AdminLeoblogDashboardController extends ModuleAdminController
             }
         }
         $fields_value = $this->getConfigFieldsValues($obj);
-        $fields_value['social_code'] = LeoBlogHelper::correctDeCodeData($fields_value['social_code']);
+        $fields_value['social_code'] = Cs24BlogHelper::correctDeCodeData($fields_value['social_code']);
         $helper = new HelperForm($this);
         
         $this->setHelperDisplay($helper);
@@ -758,21 +758,21 @@ class AdminLeoblogDashboardController extends ModuleAdminController
         $form = $helper->generateForm($this->fields_form);
         $template = $this->createTemplate('panel.tpl');
 
-        $comments = LeoBlogComment::getComments(null, 10, $this->context->language->id);
-        $blogs = LeoBlogBlog::getListBlogs(null, $this->context->language->id, 0, 10, 'hits', 'DESC');
+        $comments = Cs24BlogComment::getComments(null, 10, $this->context->language->id);
+        $blogs = Cs24BlogBlog::getListBlogs(null, $this->context->language->id, 0, 10, 'hits', 'DESC');
 
         $template->assign(array(
             'quicktools' => $quicktools,
             'showed' => 1,
-            'comment_link' => $link->getAdminLink('AdminLeoblogComments'),
-            'blog_link' => $link->getAdminLink('AdminLeoblogBlogs'),
+            'comment_link' => $link->getAdminLink('AdminCs24blogComments'),
+            'blog_link' => $link->getAdminLink('AdminCs24blogBlogs'),
             'blogs' => $blogs,
-            'count_blogs' => LeoBlogBlog::countBlogs(null, $this->context->language->id),
-            'count_cats' => Leoblogcat::countCats(),
-            'count_comments' => LeoBlogComment::countComments(),
+            'count_blogs' => Cs24BlogBlog::countBlogs(null, $this->context->language->id),
+            'count_cats' => Cs24BlogCat::countCats(),
+            'count_comments' => Cs24BlogComment::countComments(),
             'latest_comments' => $comments,
             'globalform' => $form,
-            'default_tab' => Configuration::get('LEOBLOG_DASHBOARD_DEFAULTTAB')
+            'default_tab' => Configuration::get('CS24BLOG_DASHBOARD_DEFAULTTAB')
         ));
         return $template->fetch();
     }
@@ -815,7 +815,7 @@ class AdminLeoblogDashboardController extends ModuleAdminController
             }
         }
         
-        $fields_values['LEOBLOG_DASHBOARD_DEFAULTTAB'] = Tools::getValue('LEOBLOG_DASHBOARD_DEFAULTTAB', Configuration::get('LEOBLOG_DASHBOARD_DEFAULTTAB'));
+        $fields_values['CS24BLOG_DASHBOARD_DEFAULTTAB'] = Tools::getValue('CS24BLOG_DASHBOARD_DEFAULTTAB', Configuration::get('CS24BLOG_DASHBOARD_DEFAULTTAB'));
         return $fields_values;
     }
     

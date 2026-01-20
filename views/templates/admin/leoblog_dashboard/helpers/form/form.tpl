@@ -1,5 +1,5 @@
 {* 
-* @Module Name: Leo Blog
+* @Module Name: Compralosubito24 Blog
 * @Website: leotheme.com.com - prestashop template provider
 * @author Leotheme <leotheme@gmail.com>
 * @copyright  Leotheme

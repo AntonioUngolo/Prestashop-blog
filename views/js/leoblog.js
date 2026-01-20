@@ -82,7 +82,7 @@ $(document).ready( function(){
 					
 					if(lang_href.indexOf(url_search) > -1 )
 					{
-						if ($('body#module-leoblog-list').length)
+						if ($('body#module-cs24blog-list').length)
 						{
 							var url_change = lang_href.replace('/'+current_list_rewrite+'.html', '/'+list_rewrite+'.html');
 						}
@@ -91,7 +91,7 @@ $(document).ready( function(){
 							var url_change = lang_href.replace('/'+current_list_rewrite+'/', '/'+list_rewrite+'/');
 						}
 						
-						if ($('body#module-leoblog-blog').length)
+						if ($('body#module-cs24blog-blog').length)
 						{
 							if (config_url_use_id == 0)
 							{
@@ -100,7 +100,7 @@ $(document).ready( function(){
 							url_change = url_change.replace('/'+current_blog_rewrite, '/'+array_blog_rewrite[iso_code]);
 						}
 						
-						if ($('body#module-leoblog-category').length)
+						if ($('body#module-cs24blog-category').length)
 						{
 							if (config_url_use_id == 0)
 							{

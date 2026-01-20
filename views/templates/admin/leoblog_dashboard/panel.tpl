@@ -1,5 +1,5 @@
 {* 
-* @Module Name: Leo Blog
+* @Module Name: Compralosubito24 Blog
 * @Website: leotheme.com.com - prestashop template provider
 * @author Leotheme <leotheme@gmail.com>
 * @copyright  Leotheme
@@ -117,7 +117,7 @@
 									<div>
 										<ul>
 										{foreach from=$latest_comments item=comment}
-										<li><a href="{$comment_link|escape:'html':'UTF-8'}&id_comment={$comment.id_comment|intval}&updateleoblog_comment">
+										<li><a href="{$comment_link|escape:'html':'UTF-8'}&id_comment={$comment.id_comment|intval}&updatecs24_blog_comment">
 												{$comment.comment|strip_tags|truncate:65:'...'} </a/> {l s='Date' mod='leoblog'}({$comment.date_add|escape:'html':'UTF-8'}) - {l s='User :' mod='leoblog'} {$comment.user|escape:'html':'UTF-8'}</li>
 										{/foreach}
 										</ul>
@@ -127,7 +127,7 @@
 									 <div>
 										<ul>
 										{foreach from=$blogs item=blog}
-										<li><a href="{$blog_link|escape:'html':'UTF-8'}&id_leoblog_blog={$blog.id_leoblog_blog|intval}&updateleoblog_blog">{$blog.meta_title|escape:'html':'UTF-8'}</a/> - <i>{l s='Hits' mod='leoblog'}: {$blog.hits|intval}</i> </li>
+										<li><a href="{$blog_link|escape:'html':'UTF-8'}&id_cs24_blog_blog={$blog.id_cs24_blog_blog|intval}&updatecs24_blog_blog">{$blog.meta_title|escape:'html':'UTF-8'}</a/> - <i>{l s='Hits' mod='leoblog'}: {$blog.hits|intval}</i> </li>
 										{/foreach}
 										</ul>
 									</div> 

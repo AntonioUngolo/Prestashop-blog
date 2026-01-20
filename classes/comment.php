@@ -1,6 +1,6 @@
 <?php
 /**
- * 2007-2015 Leotheme
+ * 2024-2026 Compralosubito24
  *
  * NOTICE OF LICENSE
  *
@@ -8,9 +8,9 @@
  *
  * DISCLAIMER
  *
- *  @author    leotheme <leotheme@gmail.com>
- *  @copyright 2007-2015 Leotheme
- *  @license   http://leotheme.com - prestashop template provider
+ *  @author    Compralosubito24 <info@compralosubito24.it>
+ *  @copyright 2024-2026 Compralosubito24
+ *  @license   https://compralosubito24.it - prestashop template provider
  */
 
 if (!defined('_PS_VERSION_')) {
@@ -18,13 +18,13 @@ if (!defined('_PS_VERSION_')) {
     exit;
 }
 
-class LeoBlogComment extends ObjectModel
+class Cs24BlogComment extends ObjectModel
 {
     /** @var string Name */
     public $user;
     public $comment;
     public $active;
-    public $id_leoblog_blog;
+    public $id_cs24_blog_blog;
     public $date_add;
     public $email;
     public $id_shop;
@@ -32,10 +32,10 @@ class LeoBlogComment extends ObjectModel
      * @see ObjectModel::$definition
      */
     public static $definition = array(
-        'table' => 'leoblog_comment',
+        'table' => 'cs24_blog_comment',
         'primary' => 'id_comment',
         'fields' => array(
-            'id_leoblog_blog' => array('type' => self::TYPE_INT, 'validate' => 'isUnsignedInt'),
+            'id_cs24_blog_blog' => array('type' => self::TYPE_INT, 'validate' => 'isUnsignedInt'),
             'user' => array('type' => self::TYPE_STRING, 'required' => false),
             'email' => array('type' => self::TYPE_STRING, 'validate' => 'isEmail', 'size' => 128, 'required' => true),
             'comment' => array('type' => self::TYPE_STRING, 'required' => true),
@@ -47,23 +47,23 @@ class LeoBlogComment extends ObjectModel
 
     public function add($autodate = true, $null_values = false)
     {
-        // $this->position = self::getLastPosition((int)$this->id_leoblogcat);
-        $this->id_shop = LeoBlogHelper::getIDShop();
+        // $this->position = self::getLastPosition((int)$this->id_cs24_blog_cat);
+        $this->id_shop = Cs24BlogHelper::getIDShop();
         return parent::add($autodate, $null_values);
     }
 
-    public static function countComments($id_leoblog_blog = 0, $is_active = false, $id_shop = null)
+    public static function countComments($id_cs24_blog_blog = 0, $is_active = false, $id_shop = null)
     {
         if (!$id_shop) {
             $context = Context::getContext();
             $id_shop = $context->shop->id;
         }
 
-        $query = ' SELECT count(id_comment) as total FROM '._DB_PREFIX_.'leoblog_comment WHERE 1=1 ';
+        $query = ' SELECT count(id_comment) as total FROM '._DB_PREFIX_.'cs24_blog_comment WHERE 1=1 ';
 
-        if ($id_leoblog_blog > 0) {
+        if ($id_cs24_blog_blog > 0) {
             # validate module
-            $query .= ' AND id_leoblog_blog='.(int)$id_leoblog_blog;
+            $query .= ' AND id_cs24_blog_blog='.(int)$id_cs24_blog_blog;
         }
         if ($is_active) {
             # validate module
@@ -77,19 +77,19 @@ class LeoBlogComment extends ObjectModel
         return $data[0]['total'];
     }
 
-    public static function getComments($id_leoblog_blog, $limit, $id_lang, $order = null, $by = null, $id_shop = null)
+    public static function getComments($id_cs24_blog_blog, $limit, $id_lang, $order = null, $by = null, $id_shop = null)
     {
         # validate module
         !is_null($limit) ? true : $limit = 10;
-        unset($id_leoblog_blog);
+        unset($id_cs24_blog_blog);
         unset($order);
         unset($by);
         if (!$id_shop) {
             $context = Context::getContext();
             $id_shop = $context->shop->id;
         }
-        $query = ' SELECT c.*, b.meta_title FROM '._DB_PREFIX_.'leoblog_comment c';
-        $query .= ' LEFT JOIN '._DB_PREFIX_.'leoblog_blog_lang b ON c.id_leoblog_blog=b.id_leoblog_blog AND b.id_lang='.(int)$id_lang;
+        $query = ' SELECT c.*, b.meta_title FROM '._DB_PREFIX_.'cs24_blog_comment c';
+        $query .= ' LEFT JOIN '._DB_PREFIX_.'cs24_blog_blog_lang b ON c.id_cs24_blog_blog=b.id_cs24_blog_blog AND b.id_lang='.(int)$id_lang;
         $query .= ' WHERE 1=1 AND id_shop='.(int)$id_shop;
         $query .= ' LIMIT '.(int)$limit;
 
@@ -98,7 +98,7 @@ class LeoBlogComment extends ObjectModel
         return $data;
     }
 
-    public function getList($id_leoblog_blog, $id_lang, $page_number = 0, $nb_products = 10, $order_by = null, $order_way = null, $id_shop = null)
+    public function getList($id_cs24_blog_blog, $id_lang, $page_number = 0, $nb_products = 10, $order_by = null, $order_way = null, $id_shop = null)
     {
         if (!$id_shop) {
             $context = Context::getContext();
@@ -122,7 +122,7 @@ class LeoBlogComment extends ObjectModel
         if (empty($order_way)) {
             $order_way = 'DESC';
         }
-        if ($order_by == 'id_leoblog_blog' || $order_by == 'date_add' || $order_by == 'date_upd') {
+        if ($order_by == 'id_cs24_blog_blog' || $order_by == 'date_add' || $order_by == 'date_upd') {
             $order_by_prefix = 'c';
         } else if ($order_by == 'title') {
             $order_by_prefix = 'c';
@@ -136,10 +136,10 @@ class LeoBlogComment extends ObjectModel
             $order_by = $order_by[1];
         }
 
-        $query = ' SELECT c.* FROM '._DB_PREFIX_.'leoblog_comment c';
+        $query = ' SELECT c.* FROM '._DB_PREFIX_.'cs24_blog_comment c';
         $query .= ' WHERE 1=1 AND id_shop='.(int)$id_shop;
 
-        $query .= ' AND active=1 AND id_leoblog_blog='.(int)$id_leoblog_blog;
+        $query .= ' AND active=1 AND id_cs24_blog_blog='.(int)$id_cs24_blog_blog;
         
         $order_way = Validate::isOrderWay($order_way) ? Tools::strtoupper($order_way) : 'ASC';      // $order_way Validate::isOrderWay()
         $query .= '  ORDER BY '.(isset($order_by_prefix) ? '`'.pSQL($order_by_prefix).'`.' : '').'`'.bqSQL($order_by).'` '.pSQL($order_way)

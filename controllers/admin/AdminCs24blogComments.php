@@ -1,6 +1,6 @@
 <?php
 /**
- * 2007-2015 Leotheme
+ * 2024-2026 Compralosubito24
  *
  * NOTICE OF LICENSE
  *
@@ -8,33 +8,33 @@
  *
  * DISCLAIMER
  *
- *  @author    leotheme <leotheme@gmail.com>
- *  @copyright 2007-2015 Leotheme
- *  @license   http://leotheme.com - prestashop template provider
+ *  @author    Compralosubito24 <info@compralosubito24.it>
+ *  @copyright 2024-2026 Compralosubito24
+ *  @license   https://compralosubito24.it - prestashop template provider
  */
 
 include_once(_PS_MODULE_DIR_.'leoblog/loader.php');
-require_once(_PS_MODULE_DIR_.'leoblog/classes/comment.php');
+require_once(_PS_MODULE_DIR_.'cs24blog/classes/comment.php');
 
-class AdminLeoblogCommentsController extends ModuleAdminController
+class AdminCs24blogCommentsController extends ModuleAdminController
 {
     protected $max_image_size = 1048576;
-    protected $position_identifier = 'id_leoblog_blog';
+    protected $position_identifier = 'id_cs24_blog_blog';
 
     public function __construct()
     {
         $this->bootstrap = true;
-        $this->table = 'leoblog_comment';
+        $this->table = 'cs24_blog_comment';
         $this->identifier = 'id_comment';
-        $this->className = 'LeoBlogComment';
+        $this->className = 'Cs24BlogComment';
         $this->lang = false;
 
         $this->addRowAction('edit');
         $this->addRowAction('delete');
 
-        if (Tools::getValue('id_leoblog_blog')) {
+        if (Tools::getValue('id_cs24_blog_blog')) {
             # validate module
-            $this->_where = ' AND id_leoblog_blog='.(int)Tools::getValue('id_leoblog_blog');
+            $this->_where = ' AND id_cs24_blog_blog='.(int)Tools::getValue('id_cs24_blog_blog');
         }
         parent::__construct();
         
@@ -42,7 +42,7 @@ class AdminLeoblogCommentsController extends ModuleAdminController
 
         $this->fields_list = array(
             'id_comment' => array('title' => $this->l('ID'), 'align' => 'center', 'class' => 'fixed-width-xs'),
-            'id_leoblog_blog' => array('title' => $this->l('Blog ID'), 'align' => 'center', 'class' => 'fixed-width-xs'),
+            'id_cs24_blog_blog' => array('title' => $this->l('Blog ID'), 'align' => 'center', 'class' => 'fixed-width-xs'),
             'user' => array('title' => $this->l('User')),
             'comment' => array('title' => $this->l('Comment')),
             'date_add' => array('title' => $this->l('Date Added'),'type' => 'datetime'),
@@ -54,9 +54,9 @@ class AdminLeoblogCommentsController extends ModuleAdminController
     {
         $link = $this->context->link;
 
-        if (Tools::getValue('id_leoblog_blog')) {
+        if (Tools::getValue('id_cs24_blog_blog')) {
             $this->page_header_toolbar_btn['back-blog'] = array(
-                'href' => $link->getAdminLink('AdminLeoblogBlogs').'&updateleoblog_blog&id_leoblog_blog='.Tools::getValue('id_leoblog_blog'),
+                'href' => $link->getAdminLink('AdminCs24blogBlogs').'&updatecs24_blog_blog&id_cs24_blog_blog='.Tools::getValue('id_cs24_blog_blog'),
                 'desc' => $this->l('Back To The Blog'),
                 'icon' => 'icon-blog icon-3x process-icon-blog'
             );
@@ -75,7 +75,7 @@ class AdminLeoblogCommentsController extends ModuleAdminController
         }
         $this->initToolbar();
         $this->initPageHeaderToolbar();
-        $blog = new LeoBlogBlog($this->object->id_leoblog_blog, $this->context->language->id);
+        $blog = new Cs24BlogBlog($this->object->id_cs24_blog_blog, $this->context->language->id);
 
         $this->multiple_fieldsets = true;
         $this->object->blog_title = $blog->meta_title;
@@ -170,7 +170,7 @@ class AdminLeoblogCommentsController extends ModuleAdminController
             }
 
             if ($id_comment = (int)Tools::getValue('id_comment')) {
-                $comment = new LeoBlogComment($id_comment);
+                $comment = new Cs24BlogComment($id_comment);
                 $this->copyFromPost($comment, 'comment');
 
                 if (!$comment->update()) {

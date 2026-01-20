@@ -1,6 +1,6 @@
 <?php
 /**
- * 2007-2015 Leotheme
+ * 2024-2026 Compralosubito24
  *
  * NOTICE OF LICENSE
  *
@@ -8,9 +8,9 @@
  *
  * DISCLAIMER
  *
- *  @author    leotheme <leotheme@gmail.com>
- *  @copyright 2007-2015 Leotheme
- *  @license   http://leotheme.com - prestashop template provider
+ *  @author    Compralosubito24 <info@compralosubito24.it>
+ *  @copyright 2024-2026 Compralosubito24
+ *  @license   https://compralosubito24.it - prestashop template provider
  */
 
 class Dispatcher extends DispatcherCore
@@ -37,7 +37,7 @@ class Dispatcher extends DispatcherCore
                             if (!isset($this->default_routes[$route])) {
                                 $this->default_routes[$route] = [];
                             }
-                            if ($route == 'module-leoblog-list' || $route == 'module-leoblog-blog' || $route == 'module-leoblog-category') {
+                            if ($route == 'module-cs24blog-list' || $route == 'module-cs24blog-blog' || $route == 'module-cs24blog-category') {
                                 $this->default_routes = array_merge_recursive(array("{$route}" => $route_details), $this->default_routes);
                             } else {
                                 $this->default_routes[$route] = array_merge($this->default_routes[$route], $route_details);
@@ -55,23 +55,23 @@ class Dispatcher extends DispatcherCore
         }
 
 		include_once(_PS_MODULE_DIR_.'leoblog/loader.php');
-        $config = LeoBlogConfig::getInstance();
-            if (!isset($this->default_routes['module-leoblog-list'])) {
-            	$this->default_routes['module-leoblog-list'] = array(
+        $config = Cs24BlogConfig::getInstance();
+            if (!isset($this->default_routes['module-cs24blog-list'])) {
+            	$this->default_routes['module-cs24blog-list'] = array(
 		            'controller' => 'list',
 		            'rule' => _LEO_BLOG_REWRITE_ROUTE_.'.html',
 		            'keywords' => array(
 		            ),
 		            'params' => array(
 		                'fc' => 'module',
-		                'module' => 'leoblog'
+		                'module' => 'cs24blog'
 		            )
 		        );
             }
             if ($config->get('url_use_id', 1) && (!Tools::getIsset('configure') || (Tools::getIsset('configure') && Tools::getValue('configure') != 'gsitemap'))) {
 	            // URL HAVE ID
-	            if (!isset($this->default_routes['module-leoblog-blog'])) {
-	            	$this->default_routes['module-leoblog-blog'] = array(
+	            if (!isset($this->default_routes['module-cs24blog-blog'])) {
+	            	$this->default_routes['module-cs24blog-blog'] = array(
 		                'controller' => 'blog',
 		                'rule' => _LEO_BLOG_REWRITE_ROUTE_.'/{rewrite}-b{id}.html',
 		                'keywords' => array(
@@ -80,13 +80,13 @@ class Dispatcher extends DispatcherCore
 		                ),
 		                'params' => array(
 		                    'fc' => 'module',
-		                    'module' => 'leoblog',
+		                    'module' => 'cs24blog',
 		                    
 		                )
 		            );
 	            }
-	            if (!isset($this->default_routes['module-leoblog-category'])) {
-	            	$this->default_routes['module-leoblog-category'] = array(
+	            if (!isset($this->default_routes['module-cs24blog-category'])) {
+	            	$this->default_routes['module-cs24blog-category'] = array(
 		                'controller' => 'category',
 		                'rule' => _LEO_BLOG_REWRITE_ROUTE_.'/{rewrite}-c{id}.html',
 		                'keywords' => array(
@@ -95,7 +95,7 @@ class Dispatcher extends DispatcherCore
 		                ),
 		                'params' => array(
 		                    'fc' => 'module',
-		                    'module' => 'leoblog',
+		                    'module' => 'cs24blog',
 		                            
 		                )
 		            );
@@ -107,8 +107,8 @@ class Dispatcher extends DispatcherCore
 	            $detail_rewrite = 'detail_rewrite'.'_'.Context::getContext()->language->id;
 	            $detail_rewrite = $config->get($detail_rewrite, 'detail');
 
-	            if (!isset($this->default_routes['module-leoblog-blog'])) {
-	            	$this->default_routes['module-leoblog-blog'] = array(
+	            if (!isset($this->default_routes['module-cs24blog-blog'])) {
+	            	$this->default_routes['module-cs24blog-blog'] = array(
 		                'controller' => 'blog',
 		                'rule' => _LEO_BLOG_REWRITE_ROUTE_.'/'.$detail_rewrite.'/{rewrite}.html',
 		                'keywords' => array(
@@ -117,12 +117,12 @@ class Dispatcher extends DispatcherCore
 		                ),
 		                'params' => array(
 		                    'fc' => 'module',
-		                    'module' => 'leoblog',
+		                    'module' => 'cs24blog',
 		                )
 		            );
 	            }
-	            if (!isset($this->default_routes['module-leoblog-category'])) {
-	            	$this->default_routes['module-leoblog-category'] = array(
+	            if (!isset($this->default_routes['module-cs24blog-category'])) {
+	            	$this->default_routes['module-cs24blog-category'] = array(
 		                'controller' => 'category',
 		                'rule' => _LEO_BLOG_REWRITE_ROUTE_.'/'.$category_rewrite.'/{rewrite}.html',
 		                'keywords' => array(
@@ -131,7 +131,7 @@ class Dispatcher extends DispatcherCore
 		                ),
 		                'params' => array(
 		                    'fc' => 'module',
-		                    'module' => 'leoblog',
+		                    'module' => 'cs24blog',
 		                )
 		            );
 	            }
@@ -201,7 +201,7 @@ class Dispatcher extends DispatcherCore
                         $this->routes[$id_shop][$id_lang][$route_id] = $route;
                     }
                 }
-                if (strpos($route_id, 'leoblog') !== false) {
+                if (strpos($route_id, 'cs24blog') !== false) {
                     if (isset($context->language) && !in_array($context->language->id, $language_ids)) {
                         $language_ids[] = (int) $context->language->id;
                     }
@@ -249,7 +249,7 @@ class Dispatcher extends DispatcherCore
                             $keywords,
                             array(
                                 'fc' => 'module',
-                                'module' => 'leoblog'
+                                'module' => 'cs24blog'
                             )
                         );
                         $this->routes[$id_shop][$id_lang][$route_id] = $route;

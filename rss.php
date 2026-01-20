@@ -1,6 +1,6 @@
 <?php
 /**
- * 2007-2015 Leotheme
+ * 2024-2026 Compralosubito24
  *
  * NOTICE OF LICENSE
  *
@@ -8,9 +8,9 @@
  *
  * DISCLAIMER
  *
- *  @author    leotheme <leotheme@gmail.com>
- *  @copyright 2007-2015 Leotheme
- *  @license   http://leotheme.com - prestashop template provider
+ *  @author    Compralosubito24 <info@compralosubito24.it>
+ *  @copyright 2024-2026 Compralosubito24
+ *  @license   https://compralosubito24.it - prestashop template provider
  */
 
 include(dirname(__FILE__).'/../../config/config.inc.php');
@@ -26,7 +26,7 @@ if (file_exists(_PS_MODULE_DIR_.'leoblog/classes/config.php')) {
 
     # Get data
     $authors = array();
-    $config = LeoBlogConfig::getInstance();
+    $config = Cs24BlogConfig::getInstance();
     $enbrss = (int)$config->get('indexation', 0);
     if ($enbrss != 1) {
         exit;
@@ -35,12 +35,12 @@ if (file_exists(_PS_MODULE_DIR_.'leoblog/classes/config.php')) {
     $config->setVar('blockleo_blogs_width', Configuration::get('BLEOBLOGS_WIDTH'));
     $config->setVar('blockleo_blogs_limit', Configuration::get('BLEOBLOGS_NBR'));
     $limit = (int)$config->get('rss_limit_item', 4);
-    $helper = LeoBlogHelper::getInstance();
+    $helper = Cs24BlogHelper::getInstance();
     $image_w = (int)$config->get('blockleo_blogs_width', 690);
     $image_h = (int)$config->get('blockleo_blogs_height', 300);
-    $blogs = LeoBlogBlog::getListBlogs(null, Context::getContext()->language->id, 0, $limit, 'id_leoblog_blog', 'DESC', array(), true);
+    $blogs = Cs24BlogBlog::getListBlogs(null, Context::getContext()->language->id, 0, $limit, 'id_cs24_blog_blog', 'DESC', array(), true);
     foreach ($blogs as $key => $blog) {
-        $blog = LeoBlogHelper::buildBlog($helper, $blog, $image_w, $image_h, $config);
+        $blog = Cs24BlogHelper::buildBlog($helper, $blog, $image_w, $image_h, $config);
         if ($blog['id_employee']) {
             if (!isset($authors[$blog['id_employee']])) {
                 # validate module

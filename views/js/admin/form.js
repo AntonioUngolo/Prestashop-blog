@@ -97,12 +97,12 @@
 	 	 */
 		this.each(function() {  
 	 		$(".quickedit",this).click( function(){  
-	 			location.href=config.action.replace(/amp;/g, '')+"&id_leoblogcat="+$(this).attr('rel').replace("id_","");
+	 			location.href=config.action.replace(/amp;/g, '')+"&id_cs24_blog_cat="+$(this).attr('rel').replace("id_","");
 	 		} );
 
 	 		$(".quickdel",this).click( function(){  
 	 			if( confirm(config.confirm_del) ){
-	 				location.href=config.action.replace(/amp;/g, '')+"&dodel=1&id_leoblogcat="+$(this).attr('rel').replace("id_","");
+	 				location.href=config.action.replace(/amp;/g, '')+"&dodel=1&id_cs24_blog_cat="+$(this).attr('rel').replace("id_","");
 	 			}
 	 			
 	 		} );
@@ -338,7 +338,7 @@ jQuery(document).ready(function(){
 		if(!$(this).hasClass('active'))
 		{
 			var default_tab = $(this).find('a').attr("href");			
-			$('#LEOBLOG_DASHBOARD_DEFAULTTAB').val(default_tab);
+			$('#CS24BLOG_DASHBOARD_DEFAULTTAB').val(default_tab);
 		}
 	})
 });
