@@ -54,7 +54,7 @@ class Dispatcher extends DispatcherCore
             $language_ids[] = (int) $context->language->id;
         }
 
-		include_once(_PS_MODULE_DIR_.'leoblog/loader.php');
+		include_once(_PS_MODULE_DIR_.'cs24blog/loader.php');
         $config = Cs24BlogConfig::getInstance();
             if (!isset($this->default_routes['module-cs24blog-list'])) {
             	$this->default_routes['module-cs24blog-list'] = array(
