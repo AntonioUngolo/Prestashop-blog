@@ -155,6 +155,14 @@ class Cs24blogblogModuleFrontController extends ModuleFrontController
         }
 
         $template = $config->get('template', 'default');
+
+        // Initialize template variables with defaults
+        $_social = 'module:cs24blog/views/templates/front/default/_social.tpl';
+        $_facebook_comment = 'module:cs24blog/views/templates/front/default/_facebook_comment.tpl';
+        $_diquis_comment = 'module:cs24blog/views/templates/front/default/_diquis_comment.tpl';
+        $_local_comment = 'module:cs24blog/views/templates/front/default/_local_comment.tpl';
+        $_pagination = 'module:cs24blog/views/templates/front/default/_pagination.tpl';
+
         // set link demo
         if (Tools::getValue('bloglayout') != null) {
             if (is_dir(_PS_THEME_DIR_.'modules/cs24blog/views/templates/front/'.Tools::getValue('bloglayout'))) {
@@ -341,7 +349,21 @@ class Cs24blogblogModuleFrontController extends ModuleFrontController
                 $blog->content = $smartshortcode->parse($blog->content);
             }
         }
-        if ((bool)Module::isEnabled('appagebuilder')) {
+
+        // Support Creative Elements, LeoElements, or AppPageBuilder (in priority order)
+        if ((bool)Module::isEnabled('creativeelements')) {
+            $creativeelements = Module::getInstanceByName('creativeelements');
+            if (method_exists($creativeelements, 'buildShortCode')) {
+                $blog->description = $creativeelements->buildShortCode($blog->description);
+                $blog->content = $creativeelements->buildShortCode($blog->content);
+            }
+        } elseif ((bool)Module::isEnabled('leoelements')) {
+            $leoelements = Module::getInstanceByName('leoelements');
+            if (method_exists($leoelements, 'buildShortCode')) {
+                $blog->description = $leoelements->buildShortCode($blog->description);
+                $blog->content = $leoelements->buildShortCode($blog->content);
+            }
+        } elseif ((bool)Module::isEnabled('appagebuilder')) {
             $appagebuilder = Module::getInstanceByName('appagebuilder');
             $blog->description = $appagebuilder->buildShortCode($blog->description);
             $blog->content = $appagebuilder->buildShortCode($blog->content);
