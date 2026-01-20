@@ -59,7 +59,7 @@ class Dispatcher extends DispatcherCore
             if (!isset($this->default_routes['module-cs24blog-list'])) {
             	$this->default_routes['module-cs24blog-list'] = array(
 		            'controller' => 'list',
-		            'rule' => _LEO_BLOG_REWRITE_ROUTE_.'.html',
+		            'rule' => _CS24_BLOG_REWRITE_ROUTE_.'.html',
 		            'keywords' => array(
 		            ),
 		            'params' => array(
@@ -73,7 +73,7 @@ class Dispatcher extends DispatcherCore
 	            if (!isset($this->default_routes['module-cs24blog-blog'])) {
 	            	$this->default_routes['module-cs24blog-blog'] = array(
 		                'controller' => 'blog',
-		                'rule' => _LEO_BLOG_REWRITE_ROUTE_.'/{rewrite}-b{id}.html',
+		                'rule' => _CS24_BLOG_REWRITE_ROUTE_.'/{rewrite}-b{id}.html',
 		                'keywords' => array(
 		                    'id' => array('regexp' => '[0-9]+', 'param' => 'id'),
 		                    'rewrite' => array('regexp' => '[_a-zA-Z0-9-\pL]*', 'param' => 'rewrite'),
@@ -88,7 +88,7 @@ class Dispatcher extends DispatcherCore
 	            if (!isset($this->default_routes['module-cs24blog-category'])) {
 	            	$this->default_routes['module-cs24blog-category'] = array(
 		                'controller' => 'category',
-		                'rule' => _LEO_BLOG_REWRITE_ROUTE_.'/{rewrite}-c{id}.html',
+		                'rule' => _CS24_BLOG_REWRITE_ROUTE_.'/{rewrite}-c{id}.html',
 		                'keywords' => array(
 		                    'id' => array('regexp' => '[0-9]+', 'param' => 'id'),
 		                    'rewrite' => array('regexp' => '[_a-zA-Z0-9-\pL]*', 'param' => 'rewrite'),
@@ -110,7 +110,7 @@ class Dispatcher extends DispatcherCore
 	            if (!isset($this->default_routes['module-cs24blog-blog'])) {
 	            	$this->default_routes['module-cs24blog-blog'] = array(
 		                'controller' => 'blog',
-		                'rule' => _LEO_BLOG_REWRITE_ROUTE_.'/'.$detail_rewrite.'/{rewrite}.html',
+		                'rule' => _CS24_BLOG_REWRITE_ROUTE_.'/'.$detail_rewrite.'/{rewrite}.html',
 		                'keywords' => array(
 		                    'id' => array('regexp' => '[0-9]+', 'param' => 'id'),
 		                    'rewrite' => array('regexp' => '[_a-zA-Z0-9-\pL]*', 'param' => 'rewrite'),
@@ -124,7 +124,7 @@ class Dispatcher extends DispatcherCore
 	            if (!isset($this->default_routes['module-cs24blog-category'])) {
 	            	$this->default_routes['module-cs24blog-category'] = array(
 		                'controller' => 'category',
-		                'rule' => _LEO_BLOG_REWRITE_ROUTE_.'/'.$category_rewrite.'/{rewrite}.html',
+		                'rule' => _CS24_BLOG_REWRITE_ROUTE_.'/'.$category_rewrite.'/{rewrite}.html',
 		                'keywords' => array(
 		                    'id' => array('regexp' => '[0-9]+', 'param' => 'id'),
 		                    'rewrite' => array('regexp' => '[_a-zA-Z0-9-\pL]*', 'param' => 'rewrite'),

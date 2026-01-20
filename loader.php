@@ -26,11 +26,11 @@ define('_CS24BLOG_BLOG_IMG_URI_', __PS_BASE_URI__.'modules/cs24blog/views/img/')
 define('_CS24BLOG_CATEGORY_IMG_URI_', _PS_MODULE_DIR_.'cs24blog/views/img/');
 define('_CS24BLOG_CATEGORY_IMG_DIR_', __PS_BASE_URI__.'modules/cs24blog/views/img/');
 
-define('_CS24BLOG_CACHE_IMG_DIR_', _PS_IMG_DIR_.'leoblog/');
-define('_CS24BLOG_CACHE_IMG_URI_', _PS_IMG_.'leoblog/');
+define('_CS24BLOG_CACHE_IMG_DIR_', _PS_IMG_DIR_.'cs24blog/');
+define('_CS24BLOG_CACHE_IMG_URI_', _PS_IMG_.'cs24blog/');
 
 $link_rewrite = 'link_rewrite'.'_'.Context::getContext()->language->id;
-define('_LEO_BLOG_REWRITE_ROUTE_', $config->get($link_rewrite, 'blog'));
+define('_CS24_BLOG_REWRITE_ROUTE_', $config->get($link_rewrite, 'blog'));
 
 if (!is_dir(_CS24BLOG_BLOG_IMG_DIR_.'c')) {
     # validate module

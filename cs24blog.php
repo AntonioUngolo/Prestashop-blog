@@ -785,7 +785,7 @@ class Cs24blog extends Module
       // Getting data
       $config = Cs24BlogConfig::getInstance();
       $title = strval($config->get('rss_title_item', 'RSS FEED'));
-      $url = Tools::htmlentitiesutf8('http://'.$_SERVER['HTTP_HOST'].__PS_BASE_URI__).'modules/leoblog/rss.php';
+      $url = Tools::htmlentitiesutf8('http://'.$_SERVER['HTTP_HOST'].__PS_BASE_URI__).'modules/cs24blog/rss.php';
       $nb = (int)$config->get('rss_limit_item', 1);
       $cacheId = $this->getCacheId($this->name.'-'.date("YmdH"));
       $rss_links = array();
