@@ -93,7 +93,7 @@ class AdminCs24blogBlogsController extends ModuleAdminController
         $this->initPageHeaderToolbar();
 
         $id_cs24_blog_cat = (int)(Tools::getValue('id_cs24_blog_cat'));
-        $obj = new cs24_blog_cat($id_cs24_blog_cat);
+        $obj = new Cs24BlogCat($id_cs24_blog_cat);
         $obj->getTree();
         $menus = $obj->getDropdown(null, $obj->id_parent, false);
         array_shift($menus);

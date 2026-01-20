@@ -209,7 +209,7 @@ class Cs24blogblogModuleFrontController extends ModuleFrontController
             return $this->setTemplate('module:cs24blog/views/templates/front/'.$template.'/blog.tpl');
         }
 
-        $category = new cs24_blog_cat($blog->id_cs24_blog_cat, $this->context->language->id);
+        $category = new Cs24BlogCat($blog->id_cs24_blog_cat, $this->context->language->id);
 
 
         $image_w = $config->get('item_img_width', 690);
@@ -438,8 +438,8 @@ class Cs24blogblogModuleFrontController extends ModuleFrontController
             $url_rewrite = rtrim($url_rewrite[$url_last_item], '.html');
             $blog = Cs24BlogBlog::findByRewrite(array('link_rewrite' => $url_rewrite));
         }
-        
-        $category = new cs24_blog_cat($blog->id_cs24_blog_cat, $this->context->language->id);
+
+        $category = new Cs24BlogCat($blog->id_cs24_blog_cat, $this->context->language->id);
         $params = array(
             'rewrite' => $category->link_rewrite,
             'id' => $category->id_cs24_blog_cat

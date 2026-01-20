@@ -144,10 +144,10 @@ class AdminCs24blogCategoriesController extends ModuleAdminController
         if (Tools::isSubmit('save'.$this->name) && Tools::isSubmit('active')) {
             if ($id_cs24_blog_cat = Tools::getValue('id_cs24_blog_cat')) {
                 # validate module
-                $megamenu = new cs24_blog_cat((int)$id_cs24_blog_cat);
+                $megamenu = new Cs24BlogCat((int)$id_cs24_blog_cat);
             } else {
                 # validate module
-                $megamenu = new cs24_blog_cat();
+                $megamenu = new Cs24BlogCat();
                 $megamenu->randkey = Cs24BlogHelper::genKey();
             }
             $this->copyFromPost($megamenu, $this->table);
