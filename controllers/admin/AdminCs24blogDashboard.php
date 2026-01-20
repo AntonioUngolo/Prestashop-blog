@@ -13,7 +13,7 @@
  *  @license   https://compralosubito24.it - prestashop template provider
  */
 
-include_once(_PS_MODULE_DIR_.'leoblog/loader.php');
+include_once(_PS_MODULE_DIR_.'cs24blog/loader.php');
 require_once(_PS_MODULE_DIR_.'cs24blog/classes/comment.php');
 
 class AdminCs24blogDashboardController extends ModuleAdminController
@@ -756,7 +756,7 @@ class AdminCs24blogDashboardController extends ModuleAdminController
             }
         }
         $form = $helper->generateForm($this->fields_form);
-        $template = $this->createTemplate('panel.tpl');
+        $template = $this->createTemplate('cs24blog_dashboard/panel.tpl');
 
         $comments = Cs24BlogComment::getComments(null, 10, $this->context->language->id);
         $blogs = Cs24BlogBlog::getListBlogs(null, $this->context->language->id, 0, 10, 'hits', 'DESC');

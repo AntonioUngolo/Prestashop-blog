@@ -250,13 +250,13 @@ class Cs24blog extends Module
     public function hookDisplayBackOfficeHeader()
     {
         $media_dir = $this->getMediaDir();
-        if (file_exists(_PS_THEME_DIR_.'css/modules/leoblog/assets/admin/blogmenu.css')) {
+        if (file_exists(_PS_THEME_DIR_.'css/modules/cs24blog/assets/admin/blogmenu.css')) {
             $this->context->controller->addCss($this->_path.'assets/admin/blogmenu.css');
         } else {
             $this->context->controller->addCss(__PS_BASE_URI__.$media_dir.'css/admin/blogmenu.css');
         }
         Media::addJsDef(array(
-            'url_ajax_blog' => $this->context->shop->getBaseURL(true, true).'modules/leoblog/adminajax.php',
+            'url_ajax_blog' => $this->context->shop->getBaseURL(true, true).'modules/cs24blog/adminajax.php',
         ));
     }
 
@@ -496,21 +496,21 @@ class Cs24blog extends Module
         $template = $config->get('template');
         $media_dir = $this->getMediaDir();
         if (Tools::getValue('bloglayout') != null) {
-            if (is_dir(_PS_THEME_DIR_.'modules/leoblog/views/templates/front/'.Tools::getValue('bloglayout'))
-                || is_dir(_PS_MODULE_DIR_ .'leoblog/views/templates/front/'.Tools::getValue('bloglayout'))) {
+            if (is_dir(_PS_THEME_DIR_.'modules/cs24blog/views/templates/front/'.Tools::getValue('bloglayout'))
+                || is_dir(_PS_MODULE_DIR_ .'cs24blog/views/templates/front/'.Tools::getValue('bloglayout'))) {
                 $template = Tools::getValue('bloglayout');
             }
         }
         if (file_exists(_PS_THEME_DIR_.$media_dir.'css/'.$template.'.css') || file_exists(_PS_THEME_DIR_.'assets/css/'.$media_dir.'css/'.$template.'.css')) {
             Context::getContext()->controller->addCSS(__PS_BASE_URI__.$media_dir.'css/'.$template.'.css', 'all');
         } else {
-            if (file_exists(_PS_MODULE_DIR_ .'leoblog/views/css/'.$template.'.css')) {
-                Context::getContext()->controller->addCSS(_PS_MODULE_DIR_ .'leoblog/views/css/'.$template.'.css');
+            if (file_exists(_PS_MODULE_DIR_ .'cs24blog/views/css/'.$template.'.css')) {
+                Context::getContext()->controller->addCSS(_PS_MODULE_DIR_ .'cs24blog/views/css/'.$template.'.css');
             } else {
-                if (file_exists(_PS_THEME_DIR_.'css/modules/leoblog/assets/leoblog.css')) {
-                    Context::getContext()->controller->addCSS(__PS_BASE_URI__.$media_dir.'assets/leoblog.css', 'all');
+                if (file_exists(_PS_THEME_DIR_.'css/modules/cs24blog/assets/cs24blog.css')) {
+                    Context::getContext()->controller->addCSS(__PS_BASE_URI__.$media_dir.'assets/cs24blog.css', 'all');
                 } else {
-                    Context::getContext()->controller->addCSS(__PS_BASE_URI__.$media_dir.'css/leoblog.css', 'all');
+                    Context::getContext()->controller->addCSS(__PS_BASE_URI__.$media_dir.'css/cs24blog.css', 'all');
                 }
             }
         }

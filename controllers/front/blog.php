@@ -13,7 +13,7 @@
  *  @license   https://compralosubito24.it - prestashop template provider
  */
 
-include_once(_PS_MODULE_DIR_.'leoblog/loader.php');
+include_once(_PS_MODULE_DIR_.'cs24blog/loader.php');
 
 class Cs24blogblogModuleFrontController extends ModuleFrontController
 {
